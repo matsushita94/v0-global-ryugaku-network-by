@@ -105,9 +105,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
     resetForm,
   }))
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -127,15 +125,19 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
     if (!formData.email.trim()) return "Please enter your email address"
     if (!formData.country.trim()) return "Please enter your country of residence"
     if (!formData.desired_program) return "Please select your desired program"
+
     if (formData.budget_amount && Number(formData.budget_amount) <= 0) {
       return "Budget amount must be greater than 0"
     }
+
     if (formData.budget_amount && !formData.budget_currency) {
       return "Please select a budget currency"
     }
+
     if (formData.budget_amount && !formData.budget_period) {
       return "Please select a budget period"
     }
+
     return null
   }
 
@@ -182,7 +184,8 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
       setIsSubmitted(true)
       setFormData(initialFormData)
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to submit application. Please try again."
+      const message =
+        err instanceof Error ? err.message : "Failed to submit application. Please try again."
       setError(message)
       console.error("Form submission error:", err)
     } finally {
@@ -198,7 +201,8 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
             <CheckCircle2 className="mx-auto mb-6 h-16 w-16" />
             <h2 className="text-4xl font-bold mb-4">Application Received!</h2>
             <p className="text-xl opacity-90 mb-8">
-              Thank you for your interest in studying abroad. Our team will review your application and contact you within 2–3 business days.
+              Thank you for your interest in studying abroad. Our team will review your application and
+              contact you within 2–3 business days.
             </p>
             <Button
               variant="outline"
@@ -220,7 +224,8 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
           <div className="text-center mb-10">
             <h2 className="text-4xl font-bold mb-4">Start Your Journey</h2>
             <p className="text-lg text-slate-600">
-              Fill out the form below and one of our education consultants will contact you to discuss your options.
+              Fill out the form below and one of our education consultants will contact you to discuss your
+              options.
             </p>
           </div>
 
@@ -395,7 +400,9 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
 
             <Button type="submit" size="lg" className="w-full mt-8 group" disabled={isLoading}>
               {isLoading ? "Submitting..." : "Start Your Journey"}
-              {!isLoading && <ArrowRight className="size-4 group-hover:translate-x-0.5 transition-transform" />}
+              {!isLoading && (
+                <ArrowRight className="size-4 group-hover:translate-x-0.5 transition-transform" />
+              )}
             </Button>
           </form>
         </div>
