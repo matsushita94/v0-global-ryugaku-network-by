@@ -172,7 +172,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
         status: "new_lead",
       }
 
-      const { error: insertError } = await supabase.from("student").insert([submitData])
+      const { error: insertError } = await supabase.from("students").insert([submitData])
 
       if (insertError) {
         console.error("Supabase insert error:", insertError)
