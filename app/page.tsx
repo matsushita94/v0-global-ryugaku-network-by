@@ -1,3 +1,6 @@
+"use client"
+
+import { useRef } from "react"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
@@ -10,15 +13,28 @@ import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
+  const applicationFormRef = useRef<{ resetForm: () => void } | null>(null)
+
+  const handleApplyClick = () => {
+    // Reset the form state in the ApplicationForm component
+    applicationFormRef.current?.resetForm()
+    
+    // Scroll to the apply section
+    const applySection = document.getElementById("apply")
+    if (applySection) {
+      applySection.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   return (
     <main className="min-h-screen">
-      <Header />
+      <Header onApplyClick={handleApplyClick} />
       <Hero />
       <About />
       <Destinations />
       <Programs />
       <WhyStudyAbroad />
-      <ApplicationForm />
+      <ApplicationForm ref={applicationFormRef} />
       <Partner />
       <Contact />
       <Footer />

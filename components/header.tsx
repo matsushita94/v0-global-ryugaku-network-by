@@ -14,8 +14,18 @@ const navigation = [
   { name: "Contact", href: "#contact" },
 ]
 
-export function Header() {
+interface HeaderProps {
+  onApplyClick?: () => void
+}
+
+export function Header({ onApplyClick }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const handleApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    setMobileMenuOpen(false)
+    onApplyClick?.()
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -51,7 +61,7 @@ export function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Button asChild>
-            <Link href="#apply">Apply Now</Link>
+            <Link href="#apply" onClick={handleApplyClick}>Apply Now</Link>
           </Button>
         </div>
       </nav>
@@ -93,7 +103,7 @@ export function Header() {
                 </div>
                 <div className="py-6">
                   <Button asChild className="w-full">
-                    <Link href="#apply">Apply Now</Link>
+                    <Link href="#apply" onClick={handleApplyClick}>Apply Now</Link>
                   </Button>
                 </div>
               </div>

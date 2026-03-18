@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, forwardRef, useImperativeHandle } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -41,7 +41,7 @@ interface FormData {
   message: string
 }
 
-export function ApplicationForm() {
+export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function ApplicationForm(_, ref) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -69,6 +69,26 @@ export function ApplicationForm() {
       }
     }
   }, [])
+
+  // Expose resetForm method to parent component
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setIsSubmitted(false)
+      setError(null)
+      setFormData({
+        full_name: "",
+        email: "",
+        phone: "",
+        country: "",
+        nationality: "",
+        japanese_level: "",
+        desired_program: "",
+        desired_city: "",
+        budget: "",
+        message: "",
+      })
+    },
+  }))
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -379,4 +399,4 @@ export function ApplicationForm() {
       </div>
     </section>
   )
-}
+})
