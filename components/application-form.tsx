@@ -28,6 +28,40 @@ const programTypes = [
   "Study Abroad Program",
 ]
 
+const currencies = [
+  { code: "USD", label: "US Dollar" },
+  { code: "EUR", label: "Euro" },
+  { code: "GBP", label: "British Pound" },
+  { code: "JPY", label: "Japanese Yen" },
+  { code: "AUD", label: "Australian Dollar" },
+  { code: "CAD", label: "Canadian Dollar" },
+  { code: "CNY", label: "Chinese Yuan" },
+  { code: "INR", label: "Indian Rupee" },
+  { code: "PHP", label: "Philippine Peso" },
+  { code: "NPR", label: "Nepalese Rupee" },
+  { code: "SGD", label: "Singapore Dollar" },
+  { code: "THB", label: "Thai Baht" },
+  { code: "VND", label: "Vietnamese Dong" },
+  { code: "KRW", label: "South Korean Won" },
+  { code: "MYR", label: "Malaysian Ringgit" },
+  { code: "IDR", label: "Indonesian Rupiah" },
+  { code: "NZD", label: "New Zealand Dollar" },
+  { code: "CHF", label: "Swiss Franc" },
+  { code: "SEK", label: "Swedish Krona" },
+  { code: "NOK", label: "Norwegian Krone" },
+  { code: "DKK", label: "Danish Krone" },
+  { code: "BRL", label: "Brazilian Real" },
+  { code: "ZAR", label: "South African Rand" },
+  { code: "HKD", label: "Hong Kong Dollar" },
+  { code: "TWD", label: "Taiwan Dollar" },
+]
+
+const budgetPeriods = [
+  "Total budget",
+  "Per year",
+  "Per month",
+]
+
 interface FormData {
   full_name: string
   email: string
@@ -37,7 +71,9 @@ interface FormData {
   japanese_level: string
   desired_program: string
   desired_city: string
-  budget: string
+  budget_amount: string
+  budget_currency: string
+  budget_period: string
   message: string
 }
 
