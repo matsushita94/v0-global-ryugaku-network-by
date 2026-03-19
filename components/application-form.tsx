@@ -48,12 +48,44 @@ const currencies = [
   { code: "TWD", label: "Taiwan Dollar" },
 ]
 
+const countryPhoneCodes = [
+  { code: "+81", label: "Japan (+81)" },
+  { code: "+1", label: "United States / Canada (+1)" },
+  { code: "+44", label: "United Kingdom (+44)" },
+  { code: "+61", label: "Australia (+61)" },
+  { code: "+64", label: "New Zealand (+64)" },
+  { code: "+33", label: "France (+33)" },
+  { code: "+49", label: "Germany (+49)" },
+  { code: "+39", label: "Italy (+39)" },
+  { code: "+34", label: "Spain (+34)" },
+  { code: "+31", label: "Netherlands (+31)" },
+  { code: "+41", label: "Switzerland (+41)" },
+  { code: "+46", label: "Sweden (+46)" },
+  { code: "+47", label: "Norway (+47)" },
+  { code: "+45", label: "Denmark (+45)" },
+  { code: "+65", label: "Singapore (+65)" },
+  { code: "+60", label: "Malaysia (+60)" },
+  { code: "+66", label: "Thailand (+66)" },
+  { code: "+62", label: "Indonesia (+62)" },
+  { code: "+63", label: "Philippines (+63)" },
+  { code: "+84", label: "Vietnam (+84)" },
+  { code: "+82", label: "South Korea (+82)" },
+  { code: "+86", label: "China (+86)" },
+  { code: "+852", label: "Hong Kong (+852)" },
+  { code: "+886", label: "Taiwan (+886)" },
+  { code: "+91", label: "India (+91)" },
+  { code: "+977", label: "Nepal (+977)" },
+  { code: "+55", label: "Brazil (+55)" },
+  { code: "+27", label: "South Africa (+27)" },
+]
+
 const budgetPeriods = ["Total budget", "Per year", "Per month"]
 
 type FormData = {
   full_name: string
   email: string
-  phone: string
+  phone_country_code: string
+  phone_local_number: string
   country: string
   nationality: string
   japanese_level: string
@@ -68,7 +100,8 @@ type FormData = {
 const initialFormData: FormData = {
   full_name: "",
   email: "",
-  phone: "",
+  phone_country_code: "+81",
+  phone_local_number: "",
   country: "",
   nationality: "",
   japanese_level: "",
@@ -120,11 +153,23 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
     }))
   }
 
+  const normalizePhoneNumber = (countryCode: string, localNumber: string) => {
+    const digitsOnly = localNumber.replace(/\D/g, "")
+    if (!digitsOnly) return null
+
+    const normalizedLocal = digitsOnly.startsWith("0") ? digitsOnly.slice(1) : digitsOnly
+    return `${countryCode}${normalizedLocal}`
+  }
+
   const validateForm = () => {
     if (!formData.full_name.trim()) return "Please enter your full name"
     if (!formData.email.trim()) return "Please enter your email address"
     if (!formData.country.trim()) return "Please enter your country of residence"
     if (!formData.desired_program) return "Please select your desired program"
+
+    if (formData.phone_local_number && !formData.phone_country_code) {
+      return "Please select a phone country code"
+    }
 
     if (formData.budget_amount && Number(formData.budget_amount) <= 0) {
       return "Budget amount must be greater than 0"
@@ -154,10 +199,15 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
     setError(null)
 
     try {
+      const combinedPhone = normalizePhoneNumber(
+        formData.phone_country_code,
+        formData.phone_local_number
+      )
+
       const submitData = {
         full_name: formData.full_name,
         email: formData.email,
-        phone: formData.phone || null,
+        phone: combinedPhone,
         country: formData.country,
         nationality: formData.nationality || null,
         japanese_level: formData.japanese_level || null,
@@ -261,11 +311,31 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(function Ap
                 </Field>
 
                 <Field>
+                  <FieldLabel>Phone Country Code (Optional)</FieldLabel>
+                  <Select
+                    value={formData.phone_country_code}
+                    onValueChange={(value) => handleSelectChange("phone_country_code", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select country code" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countryPhoneCodes.map((item) => (
+                        <SelectItem key={item.code} value={item.code}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+
+                <Field>
                   <FieldLabel>Phone Number (Optional)</FieldLabel>
                   <Input
-                    name="phone"
-                    value={formData.phone}
+                    name="phone_local_number"
+                    value={formData.phone_local_number}
                     onChange={handleInputChange}
+                    placeholder="Enter number without country code"
                   />
                 </Field>
 
