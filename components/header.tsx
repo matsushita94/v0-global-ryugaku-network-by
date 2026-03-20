@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Globe } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 const navigation = [
@@ -32,7 +33,13 @@ export function Header({ onApplyClick }: HeaderProps) {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
-            <Globe className="size-8 text-primary" />
+            <Image
+  src="/logo-complete.svg"
+  alt="Global Ryugaku Network"
+  width={32}
+  height={32}
+  className="h-8 w-8 object-contain"
+/>
             <span className="text-xl font-semibold text-foreground">
               Global Ryugaku Network
             </span>
