@@ -38,7 +38,7 @@ export function Header({ onApplyClick }: HeaderProps) {
   alt="Global Ryugaku Network"
   width={32}
   height={32}
-  className="h-8 w-8 object-contain"
+  className="size-8 object-contain shrink-0"
 />
             <span className="text-xl font-semibold text-foreground">
               Global Ryugaku Network
