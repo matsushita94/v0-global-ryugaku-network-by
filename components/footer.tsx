@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Globe } from "lucide-react"
+import Image from "next/image"
 
 const navigation = {
   main: [
@@ -23,7 +23,13 @@ export function Footer() {
         <div className="flex flex-col items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Globe className="size-8 text-primary-foreground" />
+            <Image
+  src="/logo - complete.svg"
+  alt="Global Ryugaku Network"
+  width={32}
+  height={32}
+  className="size-8 object-contain"
+/>
             <span className="text-xl font-semibold text-primary-foreground">
               Global Ryugaku Network
             </span>
