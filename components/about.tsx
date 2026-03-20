@@ -1,4 +1,5 @@
 import { Globe, Users, GraduationCap, CheckCircle } from "lucide-react"
+import Image from "next/image"
 
 const features = [
   {
@@ -47,7 +48,17 @@ export function About() {
                 className="relative bg-card rounded-lg p-6 shadow-sm border border-border hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center justify-center size-12 rounded-lg bg-primary/10 text-primary mb-4">
-                  <feature.icon className="size-6" />
+                  {feature.title === "Global Network" ? (
+  <Image
+    src="/logo - complete.svg"
+    alt="Global Ryugaku Network"
+    width={24}
+    height={24}
+    className="object-contain"
+  />
+) : (
+  <feature.icon className="size-6" />
+)}
                 </div>
                 <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
