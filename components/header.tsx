@@ -34,7 +34,7 @@ export function Header({ onApplyClick }: HeaderProps) {
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
             <Image
-  src="/logo-complete.svg"
+  src="/logo - complete.svg"
   alt="Global Ryugaku Network"
   width={32}
   height={32}
