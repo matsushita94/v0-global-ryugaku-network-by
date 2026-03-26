@@ -29,7 +29,7 @@ export function Destinations() {
           </h2>
           <p className="mt-6 text-lg leading-8 text-slate-600">
             We are currently focused on study opportunities in Japan. As our network grows,
-            we will add new destinations in a careful and transparent way.
+            we will add new destinations.
           </p>
         </div>
 
