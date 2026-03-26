@@ -1,78 +1,86 @@
-import { Globe2, TrendingUp, Users2, Award } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Building, Globe2, Users, TrendingUp, ArrowRight } from "lucide-react"
 
 const benefits = [
   {
     icon: Globe2,
-    title: "International Experience",
-    description: "Gain invaluable life experience by living and studying in a different country. Develop independence, adaptability, and a global perspective that will serve you throughout life.",
+    title: "Japan Market Focus",
+    description:
+      "We are currently focused on building relationships with schools and institutions in Japan.",
+  },
+  {
+    icon: Users,
+    title: "Student Guidance",
+    description:
+      "We aim to help students understand application steps before they contact schools.",
   },
   {
     icon: TrendingUp,
-    title: "Global Career Opportunities",
-    description: "Stand out to employers with international qualifications and cross-cultural competence. Open doors to career opportunities across multiple countries and industries.",
+    title: "Long-Term Growth",
+    description:
+      "Our goal is to build steady, credible partnerships that grow over time.",
   },
   {
-    icon: Users2,
-    title: "Cultural Exposure",
-    description: "Immerse yourself in new cultures, traditions, and ways of thinking. Build lasting friendships with people from around the world and expand your worldview.",
-  },
-  {
-    icon: Award,
-    title: "World-Class Education",
-    description: "Access top-ranked institutions and specialized programs that may not be available in your home country. Learn from renowned faculty and cutting-edge facilities.",
+    icon: Building,
+    title: "Direct Communication",
+    description:
+      "We want to work clearly and honestly with schools that value transparent student support.",
   },
 ]
 
-export function WhyStudyAbroad() {
+export function Partner() {
   return (
-    <section id="why-study-abroad" className="py-24 bg-background">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24 items-center">
+    <section id="partner" className="bg-slate-50 py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Why Study Abroad?
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Studying abroad is more than just education—it&apos;s a transformative experience that 
-              shapes who you become. Here&apos;s why thousands of students choose to study internationally 
-              every year.
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
+              Partner With Us
             </p>
-            
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="text-center p-4 bg-muted/50 rounded-lg">
-                <div className="text-4xl font-bold text-primary">500+</div>
-                <div className="text-sm text-muted-foreground mt-1">Partner Institutions</div>
-              </div>
-              <div className="text-center p-4 bg-muted/50 rounded-lg">
-                <div className="text-4xl font-bold text-primary">30+</div>
-                <div className="text-sm text-muted-foreground mt-1">Countries</div>
-              </div>
-              <div className="text-center p-4 bg-muted/50 rounded-lg">
-                <div className="text-4xl font-bold text-primary">10,000+</div>
-                <div className="text-sm text-muted-foreground mt-1">Students Placed</div>
-              </div>
-              <div className="text-center p-4 bg-muted/50 rounded-lg">
-                <div className="text-4xl font-bold text-primary">98%</div>
-                <div className="text-sm text-muted-foreground mt-1">Satisfaction Rate</div>
-              </div>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              For Schools and Education Partners in Japan
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-slate-600">
+              Global Ryugaku Network is currently focused on building relationships with
+              schools and education providers in Japan. We are still growing, and we want
+              to build partnerships carefully and honestly.
+            </p>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              If you are a language school, vocational school, university, or other
+              education provider in Japan, we would be glad to hear from you.
+            </p>
+
+            <div className="mt-8">
+              <Button asChild size="lg">
+                <Link href="#contact">
+                  Become a Partner
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </div>
 
-          <div className="space-y-6">
-            {benefits.map((benefit, index) => (
-              <div
-                key={benefit.title}
-                className="flex gap-5 p-5 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-center size-12 shrink-0 rounded-lg bg-primary/10 text-primary">
-                  <benefit.icon className="size-6" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon
+              return (
+                <div
+                  key={benefit.title}
+                  className="rounded-2xl border border-slate-200 bg-white p-6"
+                >
+                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {benefit.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {benefit.description}
+                  </p>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{benefit.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
