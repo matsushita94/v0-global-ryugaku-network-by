@@ -5,76 +5,62 @@ const destinations = [
   {
     name: "Japan",
     image: "/images/japan.jpg",
-    description: "Experience traditional culture while pursuing cutting-edge education in technology and design.",
+    description:
+      "Our current focus is helping students explore study opportunities in Japan, including language schools, vocational schools, and universities.",
   },
   {
-    name: "Canada",
-    image: "/images/canada.jpg",
-    description: "Study in a multicultural environment with world-class universities and stunning natural beauty.",
-  },
-  {
-    name: "Australia",
-    image: "/images/australia.jpg",
-    description: "Combine quality education with an adventurous lifestyle in a welcoming, diverse country.",
-  },
-  {
-    name: "United Kingdom",
-    image: "/images/uk.jpg",
-    description: "Access prestigious institutions with centuries of academic excellence and rich history.",
-  },
-  {
-    name: "Europe",
-    image: "/images/europe.jpg",
-    description: "Explore diverse cultures and languages while studying at renowned European institutions.",
-  },
-  {
-    name: "Southeast Asia",
+    name: "Global Expansion",
     image: "/images/southeast-asia.jpg",
-    description: "Discover emerging educational opportunities in dynamic and culturally rich destinations.",
+    description:
+      "We plan to expand our network over time. More destinations will be added as partnerships are built.",
   },
 ]
 
 export function Destinations() {
   return (
-    <section id="destinations" className="py-24 bg-background">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Popular Study Destinations
+    <section id="destinations" className="bg-slate-50 py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
+            Destinations
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Current Focus
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Discover your ideal study destination from our curated selection of countries.
+          <p className="mt-6 text-lg leading-8 text-slate-600">
+            We are currently focused on study opportunities in Japan. As our network grows,
+            we will add new destinations in a careful and transparent way.
           </p>
         </div>
 
-        <div className="mx-auto mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-8 md:grid-cols-2">
           {destinations.map((destination) => (
-            <article
+            <div
               key={destination.name}
-              className="group relative overflow-hidden rounded-xl bg-card shadow-sm border border-border hover:shadow-lg transition-all duration-300"
+              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="relative h-64">
                 <Image
                   src={destination.image}
-                  alt={`Study in ${destination.name}`}
-                  width={400}
-                  height={300}
-                  className="size-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  alt={destination.name}
+                  fill
+                  className="object-cover"
                 />
               </div>
+
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-semibold text-slate-900">
                   {destination.name}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-3 text-sm leading-7 text-slate-600">
                   {destination.description}
                 </p>
-                <div className="mt-4 flex items-center text-sm font-medium text-primary">
+                <div className="mt-5 inline-flex items-center text-sm font-medium text-blue-600">
                   Learn more
-                  <ArrowRight className="ml-1 size-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
