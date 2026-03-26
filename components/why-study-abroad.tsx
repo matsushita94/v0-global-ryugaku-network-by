@@ -1,83 +1,90 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Building, Globe2, Users, TrendingUp, ArrowRight } from "lucide-react"
+import { Globe2, TrendingUp, Users2, Award } from "lucide-react"
 
 const benefits = [
   {
     icon: Globe2,
-    title: "Japan Market Focus",
+    title: "International Experience",
     description:
-      "We are currently focused on building relationships with schools and institutions in Japan.",
-  },
-  {
-    icon: Users,
-    title: "Student Guidance",
-    description:
-      "We aim to help students understand application steps before they contact schools.",
+      "Living and studying in another country can help students build independence, adaptability, and confidence.",
   },
   {
     icon: TrendingUp,
-    title: "Long-Term Growth",
+    title: "Career Growth",
     description:
-      "Our goal is to build steady, credible partnerships that grow over time.",
+      "Studying abroad can strengthen language ability, cultural understanding, and future career options.",
   },
   {
-    icon: Building,
-    title: "Direct Communication",
+    icon: Users2,
+    title: "Cultural Exposure",
     description:
-      "We want to work clearly and honestly with schools that value transparent student support.",
+      "Students can experience new perspectives, communities, and ways of life through overseas study.",
+  },
+  {
+    icon: Award,
+    title: "Educational Opportunity",
+    description:
+      "Studying in Japan can open access to language learning and specialized programs that may not be available at home.",
   },
 ]
 
-export function Partner() {
+const highlights = [
+  { value: "🇯🇵", label: "Japan-Focused" },
+  { value: "🎓", label: "Study Guidance" },
+  { value: "🤝", label: "Personal Support" },
+  { value: "🌏", label: "Global Vision" },
+]
+
+export function WhyStudyAbroad() {
   return (
-    <section id="partner" className="bg-slate-50 py-20 sm:py-24">
+    <section id="why-study-abroad" className="bg-white py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Partner With Us
-            </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              For Schools and Education Partners in Japan
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Why Study in Japan?
             </h2>
             <p className="mt-6 text-lg leading-8 text-slate-600">
-              Global Ryugaku Network is currently focused on building relationships with
-              schools and education providers in Japan. We are still growing, and we want
-              to build partnerships carefully and honestly.
-            </p>
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              If you are a language school, vocational school, university, or other
-              education provider in Japan, we would be glad to hear from you.
+              Studying abroad is not only about education. It is also about personal
+              growth, language development, and new life experience. We currently focus
+              on helping students who want to study in Japan.
             </p>
 
-            <div className="mt-8">
-              <Button asChild size="lg">
-                <Link href="#contact">
-                  Become a Partner
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+            <div className="mt-10 grid grid-cols-2 gap-4">
+              {highlights.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl bg-slate-50 p-6 text-center ring-1 ring-slate-200"
+                >
+                  <div className="text-3xl">{item.value}</div>
+                  <div className="mt-3 text-sm font-medium text-slate-700">
+                    {item.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-6">
             {benefits.map((benefit) => {
               const Icon = benefit.icon
               return (
                 <div
                   key={benefit.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-6"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
                 >
-                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
-                    <Icon className="h-6 w-6" />
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-900">
+                        {benefit.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">
+                        {benefit.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    {benefit.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {benefit.description}
-                  </p>
                 </div>
               )
             })}
