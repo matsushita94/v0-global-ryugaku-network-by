@@ -25,8 +25,7 @@ export function Hero() {
             Study Anywhere in the World
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-white/90 text-pretty">
-            Global Ryugaku Network helps students discover and apply to schools around the world. 
-            We guide you through every step of your international education journey.
+            We help international students apply to trusted Japanese language schools, universities, and vocational institutions — with global expansion coming soon.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-start gap-4">
             <Button size="lg" asChild className="group">
