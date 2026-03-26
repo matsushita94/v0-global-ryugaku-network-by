@@ -9,7 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Global Ryugaku Network | Study Anywhere in the World',
   description:
-    'Global Ryugaku Network helps students discover and apply to schools around the world. We guide you through every step of your international education journey.',
+    'We help international students apply to trusted Japanese language schools, universities, and vocational institutions — with global expansion coming soon.',
   generator: 'v0.app',
   icons: {
     icon: '/Logo_favicon.png',
