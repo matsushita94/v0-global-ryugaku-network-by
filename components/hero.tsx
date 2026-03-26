@@ -1,74 +1,50 @@
-import { Building2, Users, GraduationCap, CheckCircle } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
 
-const features = [
-  {
-    icon: Building2,
-    title: "Japan-Focused Network",
-    description: "We are currently focused on building relationships with schools and education providers in Japan.",
-  },
-  {
-    icon: Users,
-    title: "Personalized Guidance",
-    description: "We provide one-on-one support based on each student's goals, background, and study plans.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Practical Study Options",
-    description: "From language schools to vocational schools and universities, we focus on realistic next steps for studying in Japan.",
-  },
-  {
-    icon: CheckCircle,
-    title: "Application Support",
-    description: "We help students understand the process and prepare for school applications in Japan.",
-  },
-]
-
-export function About() {
+export function Hero() {
   return (
-    <section id="about" className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              About Us
-            </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              About Global Ryugaku Network
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              Global Ryugaku Network is currently focused on helping students explore
-              study opportunities in Japan. Our goal is to make the application process
-              clearer, more approachable, and more personal for students who want to
-              study there.
-            </p>
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              While our long-term vision is international, our present focus is Japan.
-              We believe it is better to offer honest, practical support in one market
-              first and expand carefully over time.
-            </p>
-          </div>
+    <section className="relative overflow-hidden bg-slate-900">
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-students.jpg"
+          alt="International students on campus"
+          fill
+          className="object-cover opacity-35"
+          priority
+        />
+        <div className="absolute inset-0 bg-slate-900/55" />
+      </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {features.map((feature) => {
-              const Icon = feature.icon
-              return (
-                <div
-                  key={feature.title}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-6"
-                >
-                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {feature.description}
-                  </p>
-                </div>
-              )
-            })}
+      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-32 lg:px-12">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
+            Start Your Study Journey in Japan
+          </h1>
+
+          <p className="mt-6 text-lg leading-relaxed text-white/90 text-pretty">
+            Global Ryugaku Network currently focuses on helping international students
+            apply to Japanese language schools, vocational schools, and universities.
+            We are building toward wider global expansion in the future.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="#apply">
+                Apply Now
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-white/30 bg-white/10 text-white hover:bg-white/20"
+            >
+              <Link href="#partner">Partner With Us</Link>
+            </Button>
           </div>
         </div>
       </div>
