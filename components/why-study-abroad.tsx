@@ -11,19 +11,19 @@ const benefits = [
     icon: TrendingUp,
     title: "Career Growth",
     description:
-      "Studying abroad can strengthen language ability, cultural understanding, and future career options.",
+      "Studying in Japan can support language development, cross-cultural understanding, and future career opportunities.",
   },
   {
     icon: Users2,
     title: "Cultural Exposure",
     description:
-      "Students can experience new perspectives, communities, and ways of life through overseas study.",
+      "Students gain new perspectives through daily life, local community, and real cultural immersion.",
   },
   {
     icon: Award,
     title: "Educational Opportunity",
     description:
-      "Studying in Japan can open access to language learning and specialized programs that may not be available at home.",
+      "Japan offers language study, vocational training, and academic pathways suited to different student goals.",
   },
 ]
 
@@ -38,7 +38,7 @@ export function WhyStudyAbroad() {
   return (
     <section id="why-study-abroad" className="bg-white section-spacing">
       <div className="section-container">
-        <div className="grid gap-12 lg:grid-cols-2">
+        <div className="grid gap-14 lg:grid-cols-2">
           <div>
             <p className="section-eyebrow">Why Japan</p>
 
@@ -48,15 +48,14 @@ export function WhyStudyAbroad() {
 
             <p className="section-subtext">
               Studying abroad is not only about education. It is also about personal
-              growth, language development, and new life experience. We currently focus
-              on helping students who want to study in Japan.
+              growth, language development, and a wider view of the world.
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-4">
               {highlights.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl bg-slate-50 p-6 text-center ring-1 ring-slate-200"
+                  className="rounded-3xl bg-slate-50 p-6 text-center ring-1 ring-slate-200"
                 >
                   <div className="text-3xl">{item.value}</div>
                   <div className="mt-3 text-sm font-medium text-slate-700">
@@ -74,7 +73,7 @@ export function WhyStudyAbroad() {
               return (
                 <div key={benefit.title} className="premium-card">
                   <div className="flex gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
                       <Icon className="h-6 w-6" />
                     </div>
 
