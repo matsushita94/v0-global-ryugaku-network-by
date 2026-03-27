@@ -17,20 +17,20 @@ export function Hero() {
         <div className="absolute inset-0 bg-slate-900/55" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-32 lg:px-12">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
+      <div className="section-container section-spacing relative">
+        <div className="max-w-2xl">
+          <h1 className="hero-title">
             Start Your Study Journey in Japan
           </h1>
 
-          <p className="mt-6 text-lg leading-relaxed text-white/90 text-pretty">
+          <p className="hero-subtext">
             Global Ryugaku Network currently focuses on helping international students
             apply to Japanese language schools, vocational schools, and universities.
             We are building toward wider global expansion in the future.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="px-6 py-3 text-base">
               <Link href="#apply">
                 Apply Now
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -41,7 +41,7 @@ export function Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-white/30 bg-white/10 text-white hover:bg-white/20"
+              className="border-white/30 bg-white/10 px-6 py-3 text-base text-white hover:bg-white/20"
             >
               <Link href="#partner">Partner With Us</Link>
             </Button>
