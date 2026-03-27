@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin } from "lucide-react"
 
 const navigation = [
   { name: "About", href: "#about" },
+  { name: "Programs", href: "#programs" },
   { name: "Why Japan", href: "#why-study-abroad" },
   { name: "Partner", href: "#partner" },
   { name: "Contact", href: "#contact" },
@@ -30,8 +31,8 @@ export function Footer() {
             </div>
 
             <p className="mt-6 max-w-md text-sm leading-7 text-white/65">
-              We currently help students explore study opportunities in Japan and
-              are building a global education network step by step.
+              We currently help students explore study opportunities in Japan and are
+              building a global education network step by step.
             </p>
           </div>
 
