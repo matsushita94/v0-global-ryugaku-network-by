@@ -79,6 +79,7 @@
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -116,13 +117,18 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 
   h1,
@@ -130,5 +136,55 @@
   .display-font {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply mx-auto max-w-6xl px-6 sm:px-8 lg:px-12;
+  }
+
+  .section-spacing {
+    @apply py-24 sm:py-32;
+  }
+
+  .section-eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.2em] text-blue-600;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    @apply mt-3 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl;
+  }
+
+  .section-subtext {
+    @apply mt-6 max-w-2xl text-lg leading-8 text-slate-600;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    @apply text-5xl font-semibold leading-[0.95] text-white sm:text-6xl lg:text-7xl text-balance;
+  }
+
+  .hero-subtext {
+    @apply mt-6 max-w-xl text-lg leading-relaxed text-white/90 text-pretty;
+  }
+
+  .premium-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
+  }
+
+  .premium-muted-card {
+    @apply rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
+  }
+
+  .info-label {
+    @apply text-sm font-medium text-slate-500;
+  }
+
+  .info-value {
+    @apply text-slate-900 transition-colors hover:text-blue-600;
   }
 }
