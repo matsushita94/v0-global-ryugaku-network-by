@@ -79,7 +79,6 @@
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -128,7 +127,8 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
   }
 
   h1,
@@ -178,13 +178,5 @@
 
   .premium-muted-card {
     @apply rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
-  }
-
-  .info-label {
-    @apply text-sm font-medium text-slate-500;
-  }
-
-  .info-value {
-    @apply text-slate-900 transition-colors hover:text-blue-600;
   }
 }
