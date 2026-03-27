@@ -29,29 +29,27 @@ const features = [
 
 export function About() {
   return (
-    <section id="about" className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <section id="about" className="bg-white section-spacing">
+      <div className="section-container">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              About Us
-            </p>
+            <p className="section-eyebrow">About Us</p>
 
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="section-title">
               About Global Ryugaku Network
             </h2>
 
-            <p className="mt-6 text-lg leading-8 text-slate-600">
+            <p className="section-subtext">
               Global Ryugaku Network is currently focused on helping students explore
               study opportunities in Japan.
             </p>
 
-            <p className="mt-4 text-lg leading-8 text-slate-600">
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
               Our goal is to make the process of studying abroad clearer, more
               approachable, and more personal.
             </p>
 
-            <p className="mt-4 text-lg leading-8 text-slate-600">
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
               While our long-term vision is to build a global education network,
               we are starting with Japan and expanding step by step.
             </p>
@@ -62,10 +60,7 @@ export function About() {
               const Icon = feature.icon
 
               return (
-                <div
-                  key={feature.title}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-6"
-                >
+                <div key={feature.title} className="premium-muted-card">
                   <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
                     <Icon className="h-6 w-6" />
                   </div>
