@@ -18,18 +18,18 @@ const destinations = [
 
 export function Destinations() {
   return (
-    <section id="destinations" className="bg-slate-50 py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <section id="destinations" className="bg-slate-50 section-spacing">
+      <div className="section-container">
         <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-            Destinations
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <p className="section-eyebrow">Destinations</p>
+
+          <h2 className="section-title">
             Current Focus
           </h2>
-          <p className="mt-6 text-lg leading-8 text-slate-600">
+
+          <p className="section-subtext">
             We are currently focused on study opportunities in Japan. As our network grows,
-            we will add new destinations.
+            we will add new destinations in a careful and transparent way.
           </p>
         </div>
 
@@ -37,7 +37,7 @@ export function Destinations() {
           {destinations.map((destination) => (
             <div
               key={destination.name}
-              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
+              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               <div className="relative h-64">
                 <Image
@@ -48,13 +48,15 @@ export function Destinations() {
                 />
               </div>
 
-              <div className="p-6">
+              <div className="p-8">
                 <h3 className="text-xl font-semibold text-slate-900">
                   {destination.name}
                 </h3>
+
                 <p className="mt-3 text-sm leading-7 text-slate-600">
                   {destination.description}
                 </p>
+
                 <div className="mt-5 inline-flex items-center text-sm font-medium text-blue-600">
                   Learn more
                   <ArrowRight className="ml-2 h-4 w-4" />
