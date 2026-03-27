@@ -9,10 +9,10 @@ const destinations = [
       "Our current focus is helping students explore study opportunities in Japan, including language schools, vocational schools, and universities.",
   },
   {
-    name: "Global Expansion",
+    name: "Future Expansion",
     image: "/images/southeast-asia.jpg",
     description:
-      "We plan to expand our network over time. More destinations will be added as partnerships are built.",
+      "Our long-term vision is to expand gradually into wider international study opportunities as our network grows.",
   },
 ]
 
@@ -28,18 +28,18 @@ export function Destinations() {
           </h2>
 
           <p className="section-subtext">
-            We are currently focused on study opportunities in Japan. As our network grows,
-            we will add new destinations in a careful and transparent way.
+            We are currently focused on helping students study in Japan. As our network
+            develops, we plan to expand carefully and transparently.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
           {destinations.map((destination) => (
-            <div
+            <article
               key={destination.name}
-              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="relative h-64">
+              <div className="relative h-72">
                 <Image
                   src={destination.image}
                   alt={destination.name}
@@ -49,20 +49,20 @@ export function Destinations() {
               </div>
 
               <div className="p-8">
-                <h3 className="text-xl font-semibold text-slate-900">
+                <h3 className="text-2xl font-semibold text-slate-900">
                   {destination.name}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-4 text-sm leading-7 text-slate-600">
                   {destination.description}
                 </p>
 
-                <div className="mt-5 inline-flex items-center text-sm font-medium text-blue-600">
+                <div className="mt-6 inline-flex items-center text-sm font-medium text-blue-600">
                   Learn more
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
