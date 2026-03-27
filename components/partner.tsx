@@ -5,68 +5,83 @@ import { Building, Globe2, Users, TrendingUp, ArrowRight } from "lucide-react"
 const benefits = [
   {
     icon: Globe2,
-    title: "Global Reach",
-    description: "Access a diverse pool of motivated students from around the world.",
+    title: "Japan Market Focus",
+    description:
+      "We are currently focused on building relationships with schools and institutions in Japan.",
   },
   {
     icon: Users,
-    title: "Pre-Screened Students",
-    description: "Receive applications from students who match your institution's requirements.",
+    title: "Student Guidance",
+    description:
+      "We aim to help students understand application steps before they contact schools.",
   },
   {
     icon: TrendingUp,
-    title: "Increased Enrollment",
-    description: "Boost your international student enrollment with targeted recruitment.",
+    title: "Long-Term Growth",
+    description:
+      "Our goal is to build steady, credible partnerships that grow over time.",
   },
   {
     icon: Building,
-    title: "Dedicated Support",
-    description: "Work with our experienced team who understands your institution's needs.",
+    title: "Direct Communication",
+    description:
+      "We want to work clearly and honestly with schools that value transparent student support.",
   },
 ]
 
 export function Partner() {
   return (
-    <section id="partner" className="py-24 bg-muted/30">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24 items-center">
+    <section id="partner" className="bg-slate-50 section-spacing">
+      <div className="section-container">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Partner With Us
+            <p className="section-eyebrow">Partner With Us</p>
+
+            <h2 className="section-title">
+              For Schools and Education Partners in Japan
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Global Ryugaku Network works with schools and institutions seeking international students. 
-              Join our growing network of partner institutions and connect with motivated students 
-              from around the world.
+
+            <p className="section-subtext">
+              Global Ryugaku Network is currently focused on building relationships with
+              schools and education providers in Japan. We are still growing, and we want
+              to build partnerships carefully and honestly.
             </p>
-            <p className="mt-4 text-muted-foreground">
-              Whether you&apos;re a language school, university, vocational college, or hospitality 
-              institution, we can help you reach qualified international students who are ready 
-              to pursue their educational goals at your institution.
+
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+              If you are a language school, vocational school, university, or other
+              education provider in Japan, we would be glad to hear from you.
             </p>
+
             <div className="mt-8">
-              <Button size="lg" asChild className="group">
+              <Button asChild size="lg">
                 <Link href="#contact">
                   Become a Partner
-                  <ArrowRight className="size-4 group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {benefits.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="flex flex-col p-6 bg-card rounded-xl border border-border hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-center size-12 rounded-lg bg-primary/10 text-primary mb-4">
-                  <benefit.icon className="size-6" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon
+
+              return (
+                <div key={benefit.title} className="premium-card">
+                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {benefit.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {benefit.description}
+                  </p>
                 </div>
-                <h3 className="font-semibold text-foreground">{benefit.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{benefit.description}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
