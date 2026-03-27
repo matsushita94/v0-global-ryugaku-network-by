@@ -31,27 +31,27 @@ export function About() {
   return (
     <section id="about" className="bg-white section-spacing">
       <div className="section-container">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="section-eyebrow">About Us</p>
 
             <h2 className="section-title">
-              About Global Ryugaku Network
+              A More Personal Way to Explore Study in Japan
             </h2>
 
             <p className="section-subtext">
               Global Ryugaku Network is currently focused on helping students explore
-              study opportunities in Japan.
+              study opportunities in Japan with clear, practical guidance.
             </p>
 
             <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-              Our goal is to make the process of studying abroad clearer, more
-              approachable, and more personal.
+              Our goal is to make the process feel more approachable, more transparent,
+              and more personal for students planning their next step.
             </p>
 
             <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-              While our long-term vision is to build a global education network,
-              we are starting with Japan and expanding step by step.
+              While our long-term vision is to build a global education network, we are
+              starting with Japan and growing carefully over time.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export function About() {
 
               return (
                 <div key={feature.title} className="premium-muted-card">
-                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                  <div className="mb-4 inline-flex rounded-2xl bg-blue-50 p-3 text-blue-600">
                     <Icon className="h-6 w-6" />
                   </div>
 
