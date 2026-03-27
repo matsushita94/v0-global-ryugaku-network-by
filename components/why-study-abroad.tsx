@@ -36,14 +36,17 @@ const highlights = [
 
 export function WhyStudyAbroad() {
   return (
-    <section id="why-study-abroad" className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <section id="why-study-abroad" className="bg-white section-spacing">
+      <div className="section-container">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <p className="section-eyebrow">Why Japan</p>
+
+            <h2 className="section-title">
               Why Study in Japan?
             </h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
+
+            <p className="section-subtext">
               Studying abroad is not only about education. It is also about personal
               growth, language development, and new life experience. We currently focus
               on helping students who want to study in Japan.
@@ -67,19 +70,19 @@ export function WhyStudyAbroad() {
           <div className="space-y-6">
             {benefits.map((benefit) => {
               const Icon = benefit.icon
+
               return (
-                <div
-                  key={benefit.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-                >
+                <div key={benefit.title} className="premium-card">
                   <div className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                       <Icon className="h-6 w-6" />
                     </div>
+
                     <div>
                       <h3 className="text-lg font-semibold text-slate-900">
                         {benefit.title}
                       </h3>
+
                       <p className="mt-2 text-sm leading-7 text-slate-600">
                         {benefit.description}
                       </p>
