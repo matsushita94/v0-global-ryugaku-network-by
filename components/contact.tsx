@@ -42,19 +42,17 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <section id="contact" className="bg-white section-spacing">
+      <div className="section-container">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Contact
-            </p>
+            <p className="section-eyebrow">Contact</p>
 
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="section-title">
               Contact Us
             </h2>
 
-            <p className="mt-6 text-lg leading-8 text-slate-600">
+            <p className="section-subtext">
               We currently help students study in Japan and are expanding globally.
             </p>
 
@@ -83,24 +81,41 @@ export function Contact() {
             ) : (
               <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block text-sm font-medium text-slate-700"
+                  >
                     Name
                   </label>
-                  <Input placeholder="Your name" required />
+                  <Input id="name" name="name" placeholder="Your name" required />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-sm font-medium text-slate-700"
+                  >
                     Email
                   </label>
-                  <Input type="email" placeholder="you@example.com" required />
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                  />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">
+                  <label
+                    htmlFor="message"
+                    className="mb-2 block text-sm font-medium text-slate-700"
+                  >
                     Message
                   </label>
                   <Textarea
+                    id="message"
+                    name="message"
                     placeholder="Write your message"
                     className="min-h-[140px]"
                     required
@@ -136,7 +151,7 @@ export function Contact() {
                       {item.href ? (
                         <a
                           href={item.href}
-                          className="text-slate-900 hover:text-blue-600"
+                          className="text-slate-900 transition-colors hover:text-blue-600"
                         >
                           {item.value}
                         </a>
@@ -149,7 +164,7 @@ export function Contact() {
               })}
             </div>
 
-            <div className="mt-10 rounded-2xl bg-slate-50 p-6">
+            <div className="mt-10 rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200">
               <h4 className="font-semibold text-slate-900">Current focus</h4>
               <p className="mt-2 text-sm text-slate-600">
                 We are currently focused on helping students study in Japan and expanding globally step by step.
