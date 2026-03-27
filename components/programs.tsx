@@ -4,69 +4,112 @@ const programs = [
   {
     icon: Languages,
     title: "Language Schools",
-    description: "Intensive language programs to help you achieve fluency and cultural immersion in your destination country.",
-    features: ["Short-term & long-term courses", "Multiple proficiency levels", "Cultural activities included"],
+    description:
+      "Japanese language programs designed to help students build fluency, confidence, and daily communication skills.",
+    features: [
+      "Short-term and long-term courses",
+      "Multiple proficiency levels",
+      "Language and cultural immersion",
+    ],
   },
   {
     icon: Building2,
     title: "Universities",
-    description: "Bachelor's and Master's degree programs at accredited institutions around the world.",
-    features: ["Undergraduate programs", "Graduate studies", "Research opportunities"],
+    description:
+      "Undergraduate and postgraduate study options for students who want to pursue higher education in Japan.",
+    features: [
+      "Bachelor's and Master's pathways",
+      "Academic progression support",
+      "Long-term study opportunities",
+    ],
   },
   {
     icon: Briefcase,
-    title: "Vocational Colleges",
-    description: "Practical, career-focused training programs that lead to industry-recognized certifications.",
-    features: ["Hands-on training", "Industry partnerships", "Job placement support"],
+    title: "Vocational Schools",
+    description:
+      "Practical, career-focused education for students who want hands-on training and industry-relevant skills.",
+    features: [
+      "Applied learning environment",
+      "Career-oriented programs",
+      "Specialized study options",
+    ],
   },
   {
     icon: Utensils,
-    title: "Hospitality Schools",
-    description: "Specialized programs in hospitality management, culinary arts, and tourism.",
-    features: ["Culinary arts programs", "Hotel management", "Internship placements"],
+    title: "Hospitality Education",
+    description:
+      "Programs suited to students interested in hospitality, service, tourism, and related professional pathways.",
+    features: [
+      "Hospitality-focused learning",
+      "Service industry preparation",
+      "Practical career direction",
+    ],
   },
   {
     icon: Plane,
-    title: "Study Abroad Programs",
-    description: "Semester or year-long exchange programs that combine academics with cultural exploration.",
-    features: ["Credit transfer options", "Cultural immersion", "Travel opportunities"],
+    title: "Future Global Pathways",
+    description:
+      "As our network grows, we plan to expand into wider international study opportunities beyond Japan.",
+    features: [
+      "Careful step-by-step expansion",
+      "Future destination growth",
+      "Long-term global vision",
+    ],
   },
 ]
 
 export function Programs() {
   return (
-    <section id="programs" className="py-24 bg-muted/30">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="programs" className="bg-slate-50 section-spacing">
+      <div className="section-container">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Our Programs
+          <p className="section-eyebrow">Programs</p>
+
+          <h2 className="section-title">
+            Study Paths We Focus On
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            We offer a wide range of educational programs to match your goals and interests.
+
+          <p className="section-subtext mx-auto">
+            We currently focus on helping students explore realistic study opportunities
+            in Japan, with plans to expand our network over time.
           </p>
         </div>
 
         <div className="mx-auto mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {programs.map((program) => (
-            <div
-              key={program.title}
-              className="flex flex-col bg-card rounded-xl p-8 shadow-sm border border-border hover:shadow-md hover:border-primary/20 transition-all"
-            >
-              <div className="flex items-center justify-center size-14 rounded-xl bg-primary text-primary-foreground mb-6">
-                <program.icon className="size-7" />
+          {programs.map((program) => {
+            const Icon = program.icon
+
+            return (
+              <div
+                key={program.title}
+                className="premium-card flex flex-col"
+              >
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white">
+                  <Icon className="h-7 w-7" />
+                </div>
+
+                <h3 className="text-xl font-semibold text-slate-900">
+                  {program.title}
+                </h3>
+
+                <p className="mt-3 flex-grow text-sm leading-7 text-slate-600">
+                  {program.description}
+                </p>
+
+                <ul className="mt-6 space-y-3">
+                  {program.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start text-sm leading-6 text-slate-600"
+                    >
+                      <span className="mr-3 mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="text-xl font-semibold text-foreground">{program.title}</h3>
-              <p className="mt-3 text-muted-foreground flex-grow">{program.description}</p>
-              <ul className="mt-6 space-y-2">
-                {program.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-sm text-muted-foreground">
-                    <span className="mr-2 size-1.5 rounded-full bg-primary" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
