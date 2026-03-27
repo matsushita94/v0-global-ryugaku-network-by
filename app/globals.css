@@ -29,7 +29,7 @@
   --chart-3: oklch(0.35 0.08 250);
   --chart-4: oklch(0.65 0.1 250);
   --chart-5: oklch(0.75 0.08 250);
-  --radius: 0.5rem;
+  --radius: 0.75rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.25 0.01 250);
   --sidebar-primary: oklch(0.45 0.15 250);
@@ -135,7 +135,7 @@
   h2,
   .display-font {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -149,12 +149,12 @@
   }
 
   .section-eyebrow {
-    @apply text-sm font-semibold uppercase tracking-[0.2em] text-blue-600;
+    @apply text-sm font-semibold uppercase tracking-[0.24em] text-blue-600;
   }
 
   .section-title {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     @apply mt-3 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl;
   }
 
@@ -164,19 +164,19 @@
 
   .hero-title {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
-    @apply text-5xl font-semibold leading-[0.95] text-white sm:text-6xl lg:text-7xl text-balance;
+    letter-spacing: -0.03em;
+    @apply text-5xl font-semibold leading-[0.92] text-white sm:text-6xl lg:text-7xl text-balance;
   }
 
   .hero-subtext {
-    @apply mt-6 max-w-xl text-lg leading-relaxed text-white/90 text-pretty;
+    @apply mt-6 max-w-xl text-lg leading-relaxed text-white/85 text-pretty;
   }
 
   .premium-card {
-    @apply rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
+    @apply rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
   }
 
   .premium-muted-card {
-    @apply rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
+    @apply rounded-3xl border border-slate-200/90 bg-slate-50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
   }
 }
