@@ -1,20 +1,40 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type { Metadata } from "next"
+import { Inter, Cormorant_Garamond } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import "./globals.css"
 
-const _geist = Geist({ subsets: ['latin'] })
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+})
 
 export const metadata: Metadata = {
-  title: 'Global Ryugaku Network | Study Anywhere in the World',
+  title: "Global Ryugaku Network | Study in Japan",
   description:
-    'We help international students apply to trusted Japanese language schools, universities, and vocational institutions — with global expansion coming soon.',
-  generator: 'v0.app',
+    "Global Ryugaku Network helps students explore study opportunities in Japan.",
+  generator: "v0.app",
   icons: {
-    icon: '/Logo_favicon.png',
-    shortcut: '/Logo_favicon.png',
-    apple: '/Logo_favicon.png',
+    icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/apple-icon.png",
   },
 }
 
@@ -25,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className={`${inter.variable} ${cormorant.variable} font-sans`}>
         {children}
         <Analytics />
       </body>
