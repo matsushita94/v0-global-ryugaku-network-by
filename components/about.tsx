@@ -1,69 +1,85 @@
-import { Globe, Users, GraduationCap, CheckCircle } from "lucide-react"
-import Image from "next/image"
+import { Building2, Users, GraduationCap, CheckCircle } from "lucide-react"
 
 const features = [
   {
-    icon: Globe,
-    title: "Global Network",
-    description: "Access to educational institutions in over 30 countries worldwide.",
+    icon: Building2,
+    title: "Japan-Focused Network",
+    description:
+      "We are currently focused on building relationships with schools and education providers in Japan.",
   },
   {
     icon: Users,
-    title: "Personalized Guidance",
-    description: "One-on-one support from experienced education consultants.",
+    title: "Personalized Support",
+    description:
+      "We provide guidance based on each student's goals, background, and study plans.",
   },
   {
     icon: GraduationCap,
-    title: "Diverse Programs",
-    description: "From language schools to universities, we cover all education levels.",
+    title: "Practical Study Paths",
+    description:
+      "We focus on language schools, vocational schools, and universities in Japan.",
   },
   {
     icon: CheckCircle,
-    title: "Full Support",
-    description: "Assistance with applications, visas, and pre-departure preparation.",
+    title: "Application Guidance",
+    description:
+      "We help students understand the application process and prepare for studying in Japan.",
   },
 ]
 
 export function About() {
   return (
-    <section id="about" className="py-24 bg-muted/30">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            About Global Ryugaku Network
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Global Ryugaku Network connects students with educational institutions globally and helps 
-            simplify the process of studying abroad. Whether you dream of learning a new language in 
-            Japan, pursuing a degree in Canada, or gaining international work experience, we are here 
-            to make your journey seamless.
-          </p>
-        </div>
+    <section id="about" className="bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
+              About Us
+            </p>
 
-        <div className="mx-auto mt-16 max-w-5xl">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="relative bg-card rounded-lg p-6 shadow-sm border border-border hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-center size-12 rounded-lg bg-primary/10 text-primary mb-4">
-                  {feature.title === "Global Network" ? (
-  <Image
-    src="/logo - complete.svg"
-    alt="Global Ryugaku Network"
-    width={24}
-    height={24}
-    className="object-contain"
-  />
-) : (
-  <feature.icon className="size-6" />
-)}
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              About Global Ryugaku Network
+            </h2>
+
+            <p className="mt-6 text-lg leading-8 text-slate-600">
+              Global Ryugaku Network is currently focused on helping students explore
+              study opportunities in Japan.
+            </p>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Our goal is to make the process of studying abroad clearer, more
+              approachable, and more personal.
+            </p>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              While our long-term vision is to build a global education network,
+              we are starting with Japan and expanding step by step.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {features.map((feature) => {
+              const Icon = feature.icon
+
+              return (
+                <div
+                  key={feature.title}
+                  className="rounded-2xl border border-slate-200 bg-slate-50 p-6"
+                >
+                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {feature.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
