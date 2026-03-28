@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 
 const navigation = [
   { name: "About", href: "#about" },
+  { name: "Language Schools", href: "/language-schools" },
+  { name: "Vocational Schools", href: "/vocational-schools" },
   { name: "Programs", href: "#programs" },
   { name: "Why Japan", href: "#why-study-abroad" },
   { name: "Partner", href: "#partner" },
