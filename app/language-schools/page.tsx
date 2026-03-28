@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import ProgramHero from "@/components/program-pages/program-hero"
 import ProgramInfoSection from "@/components/program-pages/program-info-section"
+import ProgramHighlightGrid from "@/components/program-pages/program-highlight-grid"
 import ProgramCTA from "@/components/program-pages/program-cta"
 
 export default function LanguageSchoolsPage() {
@@ -13,6 +14,27 @@ export default function LanguageSchoolsPage() {
         title="Japanese Language Schools in Japan"
         subtitle="We help students explore suitable language school options in Japan based on their goals, current Japanese level, and preferred city."
         image="https://images.unsplash.com/photo-1526481280690-7b7d5a4d2ecb?auto=format&fit=crop&w=1200&q=80"
+      />
+
+      <ProgramHighlightGrid
+        title="Why students choose language schools"
+        items={[
+          {
+            title: "Beginner Friendly",
+            description:
+              "Language schools are one of the most accessible starting points for students who want to begin studying Japanese in Japan.",
+          },
+          {
+            title: "Flexible Pathways",
+            description:
+              "They can support students who want to improve daily communication, prepare for JLPT, or continue toward higher education.",
+          },
+          {
+            title: "Structured Learning",
+            description:
+              "Students benefit from a clear learning environment, regular classes, and immersion in Japanese daily life.",
+          },
+        ]}
       />
 
       <ProgramInfoSection
