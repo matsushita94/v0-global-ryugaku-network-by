@@ -14,6 +14,8 @@ export default function LanguageSchoolsPage() {
         title="Japanese Language Schools in Japan"
         subtitle="We help students explore suitable language school options in Japan based on their goals, current Japanese level, and preferred city."
         image="https://images.unsplash.com/photo-1526481280690-7b7d5a4d2ecb?auto=format&fit=crop&w=1200&q=80"
+        eyebrow="Language Schools"
+        imageAlt="Students studying in Japan"
       />
 
       <ProgramHighlightGrid
@@ -39,6 +41,7 @@ export default function LanguageSchoolsPage() {
 
       <ProgramInfoSection
         title="Who language schools are for"
+        background="slate"
         items={[
           "Students who want to start learning Japanese from beginner to advanced level.",
           "Students preparing for vocational school or university in Japan.",
@@ -48,6 +51,7 @@ export default function LanguageSchoolsPage() {
 
       <ProgramInfoSection
         title="Common study goals"
+        background="white"
         items={[
           "Improve speaking, listening, reading, and writing skills.",
           "Prepare for JLPT exams such as N5 to N2.",
@@ -57,6 +61,7 @@ export default function LanguageSchoolsPage() {
 
       <ProgramInfoSection
         title="Typical intake periods"
+        background="slate"
         items={[
           "Many language schools in Japan accept students in April, July, October, and January.",
           "The best intake depends on your timing, documents, and school availability.",
@@ -64,7 +69,10 @@ export default function LanguageSchoolsPage() {
         ]}
       />
 
-      <ProgramCTA />
+      <ProgramCTA
+        title="Ask About Language School Options"
+        subtitle="Tell us your study goals, preferred city, and current Japanese level so we can guide you toward a suitable next step."
+      />
 
       <Footer />
     </main>
