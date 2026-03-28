@@ -1,11 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const navigation = [
+const homeNavigation = [
   { name: "About", href: "#about" },
   { name: "Language Schools", href: "/language-schools" },
   { name: "Vocational Schools", href: "/vocational-schools" },
@@ -15,9 +16,24 @@ const navigation = [
   { name: "Contact", href: "#contact" },
 ]
 
+const innerNavigation = [
+  { name: "Home", href: "/" },
+  { name: "Language Schools", href: "/language-schools" },
+  { name: "Vocational Schools", href: "/vocational-schools" },
+  { name: "Contact", href: "/#contact" },
+]
+
 export function Header() {
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  const isHomePage = pathname === "/"
+
+  const navigation = useMemo(
+    () => (isHomePage ? homeNavigation : innerNavigation),
+    [isHomePage]
+  )
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +44,10 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -81,7 +101,9 @@ export function Header() {
               ))}
 
               <Button asChild size="sm" className="px-5">
-                <Link href="#apply">Get Started</Link>
+                <Link href={isHomePage ? "#apply" : "/#apply"}>
+                  Get Started
+                </Link>
               </Button>
             </nav>
 
@@ -118,7 +140,10 @@ export function Header() {
                 ))}
 
                 <Button asChild className="mt-2 w-full">
-                  <Link href="#apply" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href={isHomePage ? "#apply" : "/#apply"}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     Get Started
                   </Link>
                 </Button>
