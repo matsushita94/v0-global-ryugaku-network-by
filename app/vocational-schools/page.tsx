@@ -14,6 +14,8 @@ export default function VocationalSchoolsPage() {
         title="Vocational Schools in Japan"
         subtitle="We help students explore practical and career-focused education in Japan, including fields such as hospitality, business, IT, design, and other specialized pathways."
         image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+        eyebrow="Vocational Schools"
+        imageAlt="Students in a practical learning environment"
       />
 
       <ProgramHighlightGrid
@@ -39,6 +41,7 @@ export default function VocationalSchoolsPage() {
 
       <ProgramInfoSection
         title="Who vocational schools are for"
+        background="slate"
         items={[
           "Students who want practical skills for a specific career path.",
           "Students interested in hands-on learning rather than purely academic study.",
@@ -48,6 +51,7 @@ export default function VocationalSchoolsPage() {
 
       <ProgramInfoSection
         title="Common study fields"
+        background="white"
         items={[
           "Hospitality and tourism.",
           "Business and management.",
@@ -58,6 +62,7 @@ export default function VocationalSchoolsPage() {
 
       <ProgramInfoSection
         title="Important things to know"
+        background="slate"
         items={[
           "Vocational schools often require a clearer career goal than language schools.",
           "Some programs may expect a higher level of Japanese ability depending on the course.",
@@ -65,7 +70,10 @@ export default function VocationalSchoolsPage() {
         ]}
       />
 
-      <ProgramCTA />
+      <ProgramCTA
+        title="Ask About Vocational School Pathways"
+        subtitle="Tell us your interests, study goals, and Japanese level so we can help you explore realistic vocational options in Japan."
+      />
 
       <Footer />
     </main>
