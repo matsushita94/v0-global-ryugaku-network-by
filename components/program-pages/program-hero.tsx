@@ -2,12 +2,16 @@ type ProgramHeroProps = {
   title: string
   subtitle: string
   image: string
+  eyebrow?: string
+  imageAlt?: string
 }
 
 export default function ProgramHero({
   title,
   subtitle,
   image,
+  eyebrow = "Programs",
+  imageAlt,
 }: ProgramHeroProps) {
   return (
     <section className="relative overflow-hidden bg-slate-950 pb-20 pt-36 text-white">
@@ -15,7 +19,7 @@ export default function ProgramHero({
 
       <div className="section-container relative grid items-center gap-12 md:grid-cols-2">
         <div>
-          <p className="section-eyebrow !text-blue-300">Programs</p>
+          <p className="section-eyebrow !text-blue-300">{eyebrow}</p>
 
           <h1 className="section-title !text-white">
             {title}
@@ -29,7 +33,7 @@ export default function ProgramHero({
         <div>
           <img
             src={image}
-            alt={title}
+            alt={imageAlt || title}
             className="rounded-2xl object-cover shadow-2xl ring-1 ring-white/10"
           />
         </div>
