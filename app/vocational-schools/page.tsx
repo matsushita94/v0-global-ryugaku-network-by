@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import ProgramHero from "@/components/program-pages/program-hero"
 import ProgramInfoSection from "@/components/program-pages/program-info-section"
+import ProgramHighlightGrid from "@/components/program-pages/program-highlight-grid"
 import ProgramCTA from "@/components/program-pages/program-cta"
 
 export default function VocationalSchoolsPage() {
@@ -13,6 +14,27 @@ export default function VocationalSchoolsPage() {
         title="Vocational Schools in Japan"
         subtitle="We help students explore practical and career-focused education in Japan, including fields such as hospitality, business, IT, design, and other specialized pathways."
         image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+      />
+
+      <ProgramHighlightGrid
+        title="Why students choose vocational schools"
+        items={[
+          {
+            title: "Career Focused",
+            description:
+              "Vocational schools are suited to students who want practical training connected to real industries and job skills.",
+          },
+          {
+            title: "Hands-On Learning",
+            description:
+              "Many students prefer vocational education because it is more applied and skill-based than a purely academic path.",
+          },
+          {
+            title: "Specialized Direction",
+            description:
+              "These schools can help students move toward focused industries such as hospitality, business, IT, design, and service fields.",
+          },
+        ]}
       />
 
       <ProgramInfoSection
