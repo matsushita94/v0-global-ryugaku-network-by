@@ -57,3 +57,29 @@ export const programs = [
     ],
   },
 ]
+export const aboutFeatures = [
+  {
+    iconName: "Building2",
+    title: "Japan-Focused Network",
+    description:
+      "We are currently focused on building relationships with schools and education providers in Japan.",
+  },
+  {
+    iconName: "Users",
+    title: "Personalized Support",
+    description:
+      "We provide guidance based on each student's goals, background, and study plans.",
+  },
+  {
+    iconName: "GraduationCap",
+    title: "Practical Study Paths",
+    description:
+      "We focus on language schools, vocational schools, and universities in Japan.",
+  },
+  {
+    iconName: "CheckCircle",
+    title: "Application Guidance",
+    description:
+      "We help students understand the application process and prepare for studying in Japan.",
+  },
+]
