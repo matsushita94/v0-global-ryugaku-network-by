@@ -12,7 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { SearchableSelect, type SearchableSelectOption } from "@/components/ui/searchable-select"
+import {
+  SearchableSelect,
+  type SearchableSelectOption,
+} from "@/components/ui/searchable-select"
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import {
@@ -115,38 +118,39 @@ function uniqueSortedStrings(values: string[]): string[] {
 }
 
 function buildCountryOptions(): SearchableSelectOption[] {
-  return uniqueSortedStrings(countryData.map((item) => item.country)).map(
-    (country) => ({
-      value: country,
-      label: country,
-    })
-  )
+  return countryData
+    .slice()
+    .sort((a, b) => a.country.localeCompare(b.country))
+    .map((item) => ({
+      value: item.country,
+      label: `${item.flagEmoji} ${item.country} (${item.isoCode})`,
+      group: item.region,
+      keywords: [item.country, item.isoCode, item.nationality, item.phoneCode],
+    }))
 }
 
 function buildNationalityOptions(): SearchableSelectOption[] {
-  return uniqueSortedStrings(countryData.map((item) => item.nationality)).map(
-    (nationality) => ({
-      value: nationality,
-      label: nationality,
-    })
-  )
+  return countryData
+    .slice()
+    .sort((a, b) => a.nationality.localeCompare(b.nationality))
+    .map((item) => ({
+      value: item.nationality,
+      label: `${item.flagEmoji} ${item.nationality} (${item.isoCode})`,
+      group: item.region,
+      keywords: [item.nationality, item.country, item.isoCode, item.phoneCode],
+    }))
 }
 
 function buildPhoneCodeOptions(): SearchableSelectOption[] {
-  const seen = new Set<string>()
-  const options: SearchableSelectOption[] = []
-
-  for (const item of countryData) {
-    if (seen.has(item.phoneCode)) continue
-    seen.add(item.phoneCode)
-
-    options.push({
+  return countryData
+    .slice()
+    .sort((a, b) => a.country.localeCompare(b.country))
+    .map((item) => ({
       value: item.phoneCode,
-      label: `${item.country} (${item.phoneCode})`,
-    })
-  }
-
-  return options.sort((a, b) => a.label.localeCompare(b.label))
+      label: `${item.flagEmoji} ${item.country} (${item.isoCode}) ${item.phoneCode}`,
+      group: item.region,
+      keywords: [item.country, item.isoCode, item.phoneCode, item.nationality],
+    }))
 }
 
 const desiredStartDates = generateDesiredStartDates()
@@ -173,18 +177,16 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       }
     }, [])
 
-    const resetForm = () => {
-      setIsSubmitted(false)
-      setError(null)
-      setIsLoading(false)
-      setFormData((prev) => ({
-        ...initialFormData,
-        referral_code: prev.referral_code,
-      }))
-    }
-
     useImperativeHandle(ref, () => ({
-      resetForm,
+      resetForm: () => {
+        setIsSubmitted(false)
+        setError(null)
+        setIsLoading(false)
+        setFormData((prev) => ({
+          ...initialFormData,
+          referral_code: prev.referral_code,
+        }))
+      },
     }))
 
     const handleInputChange = (
@@ -225,6 +227,16 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       return null
     }
 
+    const resetForm = () => {
+      setIsSubmitted(false)
+      setError(null)
+      setIsLoading(false)
+      setFormData((prev) => ({
+        ...initialFormData,
+        referral_code: prev.referral_code,
+      }))
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
@@ -258,8 +270,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
           desired_city: formData.desired_city.trim() || null,
           desired_start_date: startDateValue,
           urgency: formData.urgency || null,
-          preferred_contact_method:
-            formData.preferred_contact_method || null,
+          preferred_contact_method: formData.preferred_contact_method || null,
           budget_range: formData.budget_range || null,
           message: formData.message.trim() || null,
           referral_code: formData.referral_code.trim() || null,
@@ -317,9 +328,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
         <div className="section-container">
           <div className="mx-auto max-w-2xl text-center">
             <p className="section-eyebrow">Apply</p>
-
             <h2 className="section-title">Start Your Journey</h2>
-
             <p className="section-subtext mx-auto">
               Fill in the form and we will guide you step by step based on your
               study goals, timing, and current situation.
@@ -371,8 +380,9 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                         }
                         options={phoneCodeOptions}
                         placeholder="Code"
-                        searchPlaceholder="Search country or code..."
+                        searchPlaceholder="Search country, ISO, or code..."
                         emptyMessage="No phone code found."
+                        dropdownClassName="w-max"
                       />
                     </div>
 
@@ -400,8 +410,9 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                     }
                     options={countryOptions}
                     placeholder="Select country"
-                    searchPlaceholder="Search country..."
+                    searchPlaceholder="Search country or ISO..."
                     emptyMessage="No country found."
+                    dropdownClassName="w-full"
                   />
                 </Field>
 
@@ -414,8 +425,9 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                     }
                     options={nationalityOptions}
                     placeholder="Select nationality"
-                    searchPlaceholder="Search nationality..."
+                    searchPlaceholder="Search nationality or ISO..."
                     emptyMessage="No nationality found."
+                    dropdownClassName="w-full"
                   />
                 </Field>
 
