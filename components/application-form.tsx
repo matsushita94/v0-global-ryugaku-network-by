@@ -142,15 +142,61 @@ function buildNationalityOptions(): SearchableSelectOption[] {
 }
 
 function buildPhoneCodeOptions(): SearchableSelectOption[] {
-  return countryData
-    .slice()
-    .sort((a, b) => a.country.localeCompare(b.country))
-    .map((item) => ({
-      value: item.phoneCode,
-      label: `${item.flagEmoji} ${item.country} (${item.isoCode}) ${item.phoneCode}`,
-      group: item.region,
-      keywords: [item.country, item.isoCode, item.phoneCode, item.nationality],
-    }))
+  const codeMap = new Map<
+    string,
+    {
+      phoneCode: string
+      countries: string[]
+      isoCodes: string[]
+      regions: string[]
+      keywords: string[]
+    }
+  >()
+
+  for (const item of countryData) {
+    const existing = codeMap.get(item.phoneCode)
+
+    if (existing) {
+      existing.countries.push(item.country)
+      existing.isoCodes.push(item.isoCode)
+      existing.regions.push(item.region)
+      existing.keywords.push(
+        item.country,
+        item.isoCode,
+        item.phoneCode,
+        item.nationality
+      )
+    } else {
+      codeMap.set(item.phoneCode, {
+        phoneCode: item.phoneCode,
+        countries: [item.country],
+        isoCodes: [item.isoCode],
+        regions: [item.region],
+        keywords: [
+          item.country,
+          item.isoCode,
+          item.phoneCode,
+          item.nationality,
+        ],
+      })
+    }
+  }
+
+  return Array.from(codeMap.values())
+    .sort((a, b) => a.phoneCode.localeCompare(b.phoneCode))
+    .map((item) => {
+      const uniqueCountries = Array.from(new Set(item.countries))
+      const uniqueIsoCodes = Array.from(new Set(item.isoCodes))
+      const uniqueRegions = Array.from(new Set(item.regions))
+      const uniqueKeywords = Array.from(new Set(item.keywords))
+
+      return {
+        value: item.phoneCode,
+        label: `${item.phoneCode} — ${uniqueCountries.join(" / ")}`,
+        group: uniqueRegions[0] ?? "Other",
+        keywords: [...uniqueKeywords, ...uniqueCountries, ...uniqueIsoCodes],
+      }
+    })
 }
 
 const desiredStartDates = generateDesiredStartDates()
