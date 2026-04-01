@@ -1,68 +1,24 @@
 import Link from "next/link"
-import { Languages, Building2, Briefcase, Utensils, Plane } from "lucide-react"
+import {
+  Languages,
+  Building2,
+  Briefcase,
+  Utensils,
+  Plane,
+} from "lucide-react"
 
-const programs = [
-  {
-    icon: Languages,
-    title: "Language Schools",
-    href: "/language-schools",
-    description:
-      "Japanese language programs designed to help students build fluency, confidence, and daily communication skills.",
-    features: [
-      "Short-term and long-term courses",
-      "Multiple proficiency levels",
-      "Language and cultural immersion",
-    ],
-  },
-  {
-    icon: Building2,
-    title: "Universities",
-    description:
-      "Undergraduate and postgraduate study options for students who want to pursue higher education in Japan.",
-    features: [
-      "Bachelor's and Master's pathways",
-      "Academic progression support",
-      "Long-term study opportunities",
-    ],
-  },
-  {
-    icon: Briefcase,
-    title: "Vocational Schools",
-    href: "/vocational-schools",
-    description:
-      "Practical, career-focused education for students who want hands-on training and industry-relevant skills.",
-    features: [
-      "Applied learning environment",
-      "Career-oriented programs",
-      "Specialized study options",
-    ],
-  },
-  {
-    icon: Utensils,
-    title: "Hospitality Education",
-    description:
-      "Programs suited to students interested in hospitality, service, tourism, and related professional pathways.",
-    features: [
-      "Hospitality-focused learning",
-      "Service industry preparation",
-      "Practical career direction",
-    ],
-  },
-  {
-    icon: Plane,
-    title: "Future Global Pathways",
-    description:
-      "As our network grows, we plan to expand into wider international study opportunities beyond Japan.",
-    features: [
-      "Careful step-by-step expansion",
-      "Future destination growth",
-      "Long-term global vision",
-    ],
-  },
-]
+import { programs } from "@/data/site-content"
+
+const iconMap = {
+  Languages,
+  Building2,
+  Briefcase,
+  Utensils,
+  Plane,
+}
 
 type Program = {
-  icon: typeof Languages
+  iconName: keyof typeof iconMap
   title: string
   href?: string
   description: string
@@ -70,7 +26,7 @@ type Program = {
 }
 
 function ProgramCardContent({ program }: { program: Program }) {
-  const Icon = program.icon
+  const Icon = iconMap[program.iconName]
 
   return (
     <>
