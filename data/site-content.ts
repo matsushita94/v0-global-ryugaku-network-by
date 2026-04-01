@@ -1,4 +1,12 @@
-export const programs = [
+export type Program = {
+  iconName: string
+  title: string
+  href?: string
+  description: string
+  features: string[]
+}
+
+export const programs: Program[] = [
   {
     iconName: "Languages",
     title: "Language Schools",
@@ -57,7 +65,14 @@ export const programs = [
     ],
   },
 ]
-export const aboutFeatures = [
+
+export type AboutFeature = {
+  iconName: string
+  title: string
+  description: string
+}
+
+export const aboutFeatures: AboutFeature[] = [
   {
     iconName: "Building2",
     title: "Japan-Focused Network",
