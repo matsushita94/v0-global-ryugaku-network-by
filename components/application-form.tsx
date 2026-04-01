@@ -14,49 +14,23 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react"
 import { supabase } from "@/lib/supabase"
-
-const programTypes = [
-  "Language School",
-  "Vocational School",
-  "University",
-  "Graduate School",
-  "Not Sure Yet",
-]
-
-const japaneseLevels = [
-  "None (No Japanese)",
-  "Beginner",
-  "Elementary",
-  "Intermediate",
-  "Advanced",
-  "N5",
-  "N4",
-  "N3",
-  "N2",
-  "N1",
-  "Native / Fluent",
-]
-
-const urgencyOptions = [
-  "As soon as possible",
-  "Within 3 months",
-  "Within 6 months",
-  "Just exploring",
-]
-
-const preferredContactMethods = ["Email", "Phone"]
-
-const budgetRanges = [
-  "Under ¥500,000",
-  "¥500,000 – ¥1,000,000",
-  "¥1,000,000 – ¥2,000,000",
-  "¥2,000,000+",
-  "Not Sure Yet",
-]
+import {
+  programTypes,
+  japaneseLevels,
+  urgencyOptions,
+  preferredContactMethods,
+  budgetRanges,
+} from "@/data/form-options"
+import { countryData } from "@/data/countries"
 
 type StartDateOption = {
   label: string
   value: string
+}
+
+type SelectOption = {
+  value: string
+  label: string
 }
 
 type FormData = {
@@ -140,7 +114,42 @@ function generateDesiredStartDates(count = 6): StartDateOption[] {
   return options
 }
 
+function uniqueOptions<T extends string>(
+  values: T[],
+  makeLabel?: (value: T) => string
+): SelectOption[] {
+  return Array.from(new Set(values))
+    .sort((a, b) => a.localeCompare(b))
+    .map((value) => ({
+      value,
+      label: makeLabel ? makeLabel(value) : value,
+    }))
+}
+
+function uniquePhoneCodeOptions(): SelectOption[] {
+  const seen = new Set<string>()
+  const options: SelectOption[] = []
+
+  for (const item of countryData) {
+    if (seen.has(item.phoneCode)) continue
+    seen.add(item.phoneCode)
+
+    options.push({
+      value: item.phoneCode,
+      label: `${item.phoneCode} (${item.country})`,
+    })
+  }
+
+  return options.sort((a, b) => a.label.localeCompare(b.label))
+}
+
 const desiredStartDates = generateDesiredStartDates()
+
+const countryOptions = uniqueOptions(countryData.map((item) => item.country))
+const nationalityOptions = uniqueOptions(
+  countryData.map((item) => item.nationality)
+)
+const phoneCodeOptions = uniquePhoneCodeOptions()
 
 export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
   function ApplicationForm(_, ref) {
@@ -196,12 +205,20 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       if (!formData.full_name.trim()) return "Please enter your full name"
       if (!formData.email.trim()) return "Please enter your email"
       if (!formData.country_of_residence.trim()) {
-        return "Please enter your country of residence"
+        return "Please select your country of residence"
       }
-      if (!formData.nationality.trim()) return "Please enter your nationality"
+      if (!formData.nationality.trim()) return "Please select your nationality"
       if (!formData.desired_program) return "Please select a desired program"
       if (!formData.desired_start_date) return "Please select a desired start date"
       if (!formData.japanese_level) return "Please select your Japanese level"
+
+      const hasPhoneCountry = formData.phone_country.trim().length > 0
+      const hasPhoneNumber = formData.phone_number.trim().length > 0
+
+      if (hasPhoneCountry !== hasPhoneNumber) {
+        return "Please complete both phone fields or leave both blank"
+      }
+
       return null
     }
 
@@ -227,26 +244,28 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
           .replace(/\s+/g, " ")
           .trim()
 
-        const { error: insertError } = await supabase.from("students").insert([
-          {
-            full_name: formData.full_name,
-            email: formData.email,
-            phone: fullPhone || null,
-            country_of_residence: formData.country_of_residence,
-            nationality: formData.nationality,
-            japanese_level: formData.japanese_level,
-            desired_program: formData.desired_program,
-            desired_city: formData.desired_city || null,
-            desired_start_date: startDateValue,
-            urgency: formData.urgency || null,
-            preferred_contact_method:
-              formData.preferred_contact_method || null,
-            budget_range: formData.budget_range || null,
-            message: formData.message || null,
-            referral_code: formData.referral_code || null,
-            source: "website",
-          },
-        ])
+        const payload = {
+          full_name: formData.full_name.trim(),
+          email: formData.email.trim(),
+          phone: fullPhone || null,
+          country_of_residence: formData.country_of_residence.trim(),
+          nationality: formData.nationality.trim(),
+          japanese_level: formData.japanese_level,
+          desired_program: formData.desired_program,
+          desired_city: formData.desired_city.trim() || null,
+          desired_start_date: startDateValue,
+          urgency: formData.urgency || null,
+          preferred_contact_method:
+            formData.preferred_contact_method || null,
+          budget_range: formData.budget_range || null,
+          message: formData.message.trim() || null,
+          referral_code: formData.referral_code.trim() || null,
+          source: "website",
+        }
+
+        const { error: insertError } = await supabase
+          .from("students")
+          .insert([payload])
 
         if (insertError) {
           throw new Error(insertError.message)
@@ -258,7 +277,11 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
           referral_code: prev.referral_code,
         }))
       } catch (err) {
-        setError("Submission failed. Please try again.")
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Submission failed. Please try again."
+        )
       } finally {
         setIsLoading(false)
       }
@@ -337,14 +360,28 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                 <Field>
                   <FieldLabel>Phone</FieldLabel>
                   <div className="grid grid-cols-3 gap-2">
+                    <div className="col-span-1">
+                      <Select
+                        value={formData.phone_country}
+                        onValueChange={(value) =>
+                          handleSelectChange("phone_country", value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Code" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {phoneCodeOptions.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <Input
-                      name="phone_country"
-                      value={formData.phone_country}
-                      onChange={handleInputChange}
-                      placeholder="+81"
-                      className="col-span-1"
-                    />
-                    <Input
+                      type="tel"
                       name="phone_number"
                       value={formData.phone_number}
                       onChange={handleInputChange}
@@ -352,6 +389,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                       className="col-span-2"
                     />
                   </div>
+
                   <p className="mt-1 text-sm text-muted-foreground">
                     Example: +81 90 1234 5678
                   </p>
@@ -359,22 +397,44 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
 
                 <Field>
                   <FieldLabel>Country of Residence</FieldLabel>
-                  <Input
-                    name="country_of_residence"
+                  <Select
                     value={formData.country_of_residence}
-                    onChange={handleInputChange}
-                    required
-                  />
+                    onValueChange={(value) =>
+                      handleSelectChange("country_of_residence", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countryOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </Field>
 
                 <Field>
                   <FieldLabel>Nationality</FieldLabel>
-                  <Input
-                    name="nationality"
+                  <Select
                     value={formData.nationality}
-                    onChange={handleInputChange}
-                    required
-                  />
+                    onValueChange={(value) =>
+                      handleSelectChange("nationality", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select nationality" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nationalityOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </Field>
 
                 <Field>
@@ -497,7 +557,10 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                   <Select
                     value={formData.preferred_contact_method}
                     onValueChange={(value) =>
-                      handleSelectChange("preferred_contact_method", value)
+                      handleSelectChange(
+                        "preferred_contact_method",
+                        value
+                      )
                     }
                   >
                     <SelectTrigger>
