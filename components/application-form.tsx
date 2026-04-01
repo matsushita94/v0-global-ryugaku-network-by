@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
+import { SearchableSelect, type SearchableSelectOption } from "@/components/ui/searchable-select"
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import {
@@ -26,11 +27,6 @@ import { countryData } from "@/data/countries"
 type StartDateOption = {
   label: string
   value: string
-}
-
-type SelectOption = {
-  value: string
-  label: string
 }
 
 type FormData = {
@@ -114,21 +110,31 @@ function generateDesiredStartDates(count = 6): StartDateOption[] {
   return options
 }
 
-function uniqueOptions<T extends string>(
-  values: T[],
-  makeLabel?: (value: T) => string
-): SelectOption[] {
-  return Array.from(new Set(values))
-    .sort((a, b) => a.localeCompare(b))
-    .map((value) => ({
-      value,
-      label: makeLabel ? makeLabel(value) : value,
-    }))
+function uniqueSortedStrings(values: string[]): string[] {
+  return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b))
 }
 
-function uniquePhoneCodeOptions(): SelectOption[] {
+function buildCountryOptions(): SearchableSelectOption[] {
+  return uniqueSortedStrings(countryData.map((item) => item.country)).map(
+    (country) => ({
+      value: country,
+      label: country,
+    })
+  )
+}
+
+function buildNationalityOptions(): SearchableSelectOption[] {
+  return uniqueSortedStrings(countryData.map((item) => item.nationality)).map(
+    (nationality) => ({
+      value: nationality,
+      label: nationality,
+    })
+  )
+}
+
+function buildPhoneCodeOptions(): SearchableSelectOption[] {
   const seen = new Set<string>()
-  const options: SelectOption[] = []
+  const options: SearchableSelectOption[] = []
 
   for (const item of countryData) {
     if (seen.has(item.phoneCode)) continue
@@ -144,12 +150,9 @@ function uniquePhoneCodeOptions(): SelectOption[] {
 }
 
 const desiredStartDates = generateDesiredStartDates()
-
-const countryOptions = uniqueOptions(countryData.map((item) => item.country))
-const nationalityOptions = uniqueOptions(
-  countryData.map((item) => item.nationality)
-)
-const phoneCodeOptions = uniquePhoneCodeOptions()
+const countryOptions = buildCountryOptions()
+const nationalityOptions = buildNationalityOptions()
+const phoneCodeOptions = buildPhoneCodeOptions()
 
 export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
   function ApplicationForm(_, ref) {
@@ -361,23 +364,16 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                   <FieldLabel>Phone</FieldLabel>
                   <div className="grid grid-cols-3 gap-2">
                     <div className="col-span-1">
-                      <Select
+                      <SearchableSelect
                         value={formData.phone_country}
                         onValueChange={(value) =>
                           handleSelectChange("phone_country", value)
                         }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Code" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {phoneCodeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={phoneCodeOptions}
+                        placeholder="Code"
+                        searchPlaceholder="Search country or code..."
+                        emptyMessage="No phone code found."
+                      />
                     </div>
 
                     <Input
@@ -397,44 +393,30 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
 
                 <Field>
                   <FieldLabel>Country of Residence</FieldLabel>
-                  <Select
+                  <SearchableSelect
                     value={formData.country_of_residence}
                     onValueChange={(value) =>
                       handleSelectChange("country_of_residence", value)
                     }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select country" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {countryOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    options={countryOptions}
+                    placeholder="Select country"
+                    searchPlaceholder="Search country..."
+                    emptyMessage="No country found."
+                  />
                 </Field>
 
                 <Field>
                   <FieldLabel>Nationality</FieldLabel>
-                  <Select
+                  <SearchableSelect
                     value={formData.nationality}
                     onValueChange={(value) =>
                       handleSelectChange("nationality", value)
                     }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select nationality" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {nationalityOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    options={nationalityOptions}
+                    placeholder="Select nationality"
+                    searchPlaceholder="Search nationality..."
+                    emptyMessage="No nationality found."
+                  />
                 </Field>
 
                 <Field>
@@ -557,10 +539,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                   <Select
                     value={formData.preferred_contact_method}
                     onValueChange={(value) =>
-                      handleSelectChange(
-                        "preferred_contact_method",
-                        value
-                      )
+                      handleSelectChange("preferred_contact_method", value)
                     }
                   >
                     <SelectTrigger>
