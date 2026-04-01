@@ -8,11 +8,12 @@ import {
   KeyboardEvent,
   MouseEvent as ReactMouseEvent,
 } from "react"
-import { Input } from "@/components/ui/input"
 
 export type SearchableSelectOption = {
   value: string
   label: string
+  group?: string
+  keywords?: string[]
 }
 
 type SearchableSelectProps = {
@@ -23,6 +24,12 @@ type SearchableSelectProps = {
   searchPlaceholder?: string
   emptyMessage?: string
   disabled?: boolean
+  dropdownClassName?: string
+}
+
+type GroupedOptions = {
+  group: string
+  options: SearchableSelectOption[]
 }
 
 export function SearchableSelect({
@@ -33,9 +40,11 @@ export function SearchableSelect({
   searchPlaceholder = "Type to search...",
   emptyMessage = "No results found.",
   disabled = false,
+  dropdownClassName = "w-full",
 }: SearchableSelectProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [highlightedIndex, setHighlightedIndex] = useState(0)
@@ -51,10 +60,46 @@ export function SearchableSelect({
       return options
     }
 
-    return options.filter((option) =>
-      option.label.toLowerCase().includes(normalizedQuery)
-    )
+    return options.filter((option) => {
+      const searchableText = [
+        option.label,
+        option.group ?? "",
+        ...(option.keywords ?? []),
+      ]
+        .join(" ")
+        .toLowerCase()
+
+      return searchableText.includes(normalizedQuery)
+    })
   }, [options, query])
+
+  const flatFilteredOptions = filteredOptions
+
+  const groupedOptions = useMemo<GroupedOptions[]>(() => {
+    const groups = new Map<string, SearchableSelectOption[]>()
+
+    for (const option of filteredOptions) {
+      const groupName = option.group ?? "Other"
+      const existing = groups.get(groupName) ?? []
+      existing.push(option)
+      groups.set(groupName, existing)
+    }
+
+    return Array.from(groups.entries()).map(([group, groupOptions]) => ({
+      group,
+      options: groupOptions,
+    }))
+  }, [filteredOptions])
+
+  useEffect(() => {
+    if (!open) return
+
+    const timer = window.setTimeout(() => {
+      searchInputRef.current?.focus()
+    }, 0)
+
+    return () => window.clearTimeout(timer)
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -74,17 +119,8 @@ export function SearchableSelect({
   }, [open])
 
   useEffect(() => {
-    if (!open) return
     setHighlightedIndex(0)
-
-    const timer = window.setTimeout(() => {
-      inputRef.current?.focus()
-    }, 0)
-
-    return () => {
-      window.clearTimeout(timer)
-    }
-  }, [open])
+  }, [query, open])
 
   const handleTriggerClick = () => {
     if (disabled) return
@@ -97,7 +133,7 @@ export function SearchableSelect({
     setQuery("")
   }
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return
 
     if (event.key === "Enter" || event.key === " " || event.key === "ArrowDown") {
@@ -106,11 +142,11 @@ export function SearchableSelect({
     }
   }
 
-  const handleListKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowDown") {
       event.preventDefault()
       setHighlightedIndex((prev) =>
-        Math.min(prev + 1, Math.max(filteredOptions.length - 1, 0))
+        Math.min(prev + 1, Math.max(flatFilteredOptions.length - 1, 0))
       )
     }
 
@@ -121,7 +157,7 @@ export function SearchableSelect({
 
     if (event.key === "Enter") {
       event.preventDefault()
-      const option = filteredOptions[highlightedIndex]
+      const option = flatFilteredOptions[highlightedIndex]
       if (option) {
         handleSelect(option.value)
       }
@@ -134,24 +170,14 @@ export function SearchableSelect({
     }
   }
 
-  const handleOptionMouseEnter = (index: number) => {
-    setHighlightedIndex(index)
-  }
-
-  const handleOptionMouseDown = (
-    event: ReactMouseEvent<HTMLButtonElement>,
-    optionValue: string
-  ) => {
-    event.preventDefault()
-    handleSelect(optionValue)
-  }
+  let runningIndex = -1
 
   return (
     <div ref={containerRef} className="relative">
       <button
         type="button"
         onClick={handleTriggerClick}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleTriggerKeyDown}
         disabled={disabled}
         className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs transition-colors outline-none disabled:cursor-not-allowed disabled:opacity-50"
         aria-haspopup="listbox"
@@ -164,49 +190,60 @@ export function SearchableSelect({
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-2 min-w-[280px] w-max max-w-[400px] rounded-md border bg-popover text-popover-foreground shadow-md">
+        <div
+          className={`absolute z-50 mt-2 min-w-[280px] max-w-[420px] rounded-md border bg-popover text-popover-foreground shadow-md ${dropdownClassName}`}
+        >
           <div className="border-b p-2">
-            <Input
-              ref={inputRef}
+            <input
+              ref={searchInputRef}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleListKeyDown}
+              onKeyDown={handleSearchKeyDown}
               placeholder={searchPlaceholder}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none"
             />
           </div>
 
-          <div
-            role="listbox"
-            className="max-h-72 overflow-y-auto p-1"
-          >
-            {filteredOptions.length === 0 ? (
+          <div role="listbox" className="max-h-72 overflow-y-auto p-1">
+            {flatFilteredOptions.length === 0 ? (
               <div className="px-3 py-2 text-sm text-muted-foreground">
                 {emptyMessage}
               </div>
             ) : (
-              filteredOptions.map((option, index) => {
-                const isSelected = option.value === value
-                const isHighlighted = index === highlightedIndex
+              groupedOptions.map((group) => (
+                <div key={group.group} className="py-1">
+                  <div className="px-3 py-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                    {group.group}
+                  </div>
 
-                return (
-                  <button
-                    key={`${option.value}-${index}`}
-                    type="button"
-                    role="option"
-                    aria-selected={isSelected}
-                    onMouseEnter={() => handleOptionMouseEnter(index)}
-                    onMouseDown={(event) =>
-                      handleOptionMouseDown(event, option.value)
-                    }
-                    className={`flex w-full items-center justify-between rounded-sm px-3 py-2 text-left text-sm ${
-                      isHighlighted ? "bg-accent text-accent-foreground" : ""
-                    }`}
-                  >
-                    <span>{option.label}</span>
-                    {isSelected ? <span>✓</span> : null}
-                  </button>
-                )
-              })
+                  {group.options.map((option) => {
+                    runningIndex += 1
+
+                    const isSelected = option.value === value
+                    const isHighlighted = runningIndex === highlightedIndex
+
+                    return (
+                      <button
+                        key={`${option.value}-${option.label}`}
+                        type="button"
+                        role="option"
+                        aria-selected={isSelected}
+                        onMouseEnter={() => setHighlightedIndex(runningIndex)}
+                        onMouseDown={(event: ReactMouseEvent<HTMLButtonElement>) => {
+                          event.preventDefault()
+                          handleSelect(option.value)
+                        }}
+                        className={`flex w-full items-center justify-between rounded-sm px-3 py-2 text-left text-sm ${
+                          isHighlighted ? "bg-accent text-accent-foreground" : ""
+                        }`}
+                      >
+                        <span>{option.label}</span>
+                        {isSelected ? <span>✓</span> : null}
+                      </button>
+                    )
+                  })}
+                </div>
+              ))
             )}
           </div>
         </div>
