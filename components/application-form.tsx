@@ -113,10 +113,6 @@ function generateDesiredStartDates(count = 6): StartDateOption[] {
   return options
 }
 
-function uniqueSortedStrings(values: string[]): string[] {
-  return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b))
-}
-
 function buildCountryOptions(): SearchableSelectOption[] {
   const countryMap = new Map<
     string,
@@ -124,7 +120,6 @@ function buildCountryOptions(): SearchableSelectOption[] {
       country: string
       isoCode: string
       region: string
-      flagEmoji: string
       keywords: string[]
     }
   >()
@@ -135,7 +130,6 @@ function buildCountryOptions(): SearchableSelectOption[] {
         country: item.country,
         isoCode: item.isoCode,
         region: item.region,
-        flagEmoji: item.flagEmoji,
         keywords: [item.country, item.isoCode, item.nationality, item.phoneCode],
       })
     }
@@ -145,7 +139,7 @@ function buildCountryOptions(): SearchableSelectOption[] {
     .sort((a, b) => a.country.localeCompare(b.country))
     .map((item) => ({
       value: item.country,
-      label: `${item.flagEmoji} ${item.country} (${item.isoCode})`,
+      label: `${item.country} (${item.isoCode})`,
       group: item.region,
       keywords: item.keywords,
     }))
@@ -158,7 +152,6 @@ function buildNationalityOptions(): SearchableSelectOption[] {
       nationality: string
       isoCode: string
       region: string
-      flagEmoji: string
       keywords: string[]
     }
   >()
@@ -169,7 +162,6 @@ function buildNationalityOptions(): SearchableSelectOption[] {
         nationality: item.nationality,
         isoCode: item.isoCode,
         region: item.region,
-        flagEmoji: item.flagEmoji,
         keywords: [item.nationality, item.country, item.isoCode, item.phoneCode],
       })
     }
@@ -179,7 +171,7 @@ function buildNationalityOptions(): SearchableSelectOption[] {
     .sort((a, b) => a.nationality.localeCompare(b.nationality))
     .map((item) => ({
       value: item.nationality,
-      label: `${item.flagEmoji} ${item.nationality} (${item.isoCode})`,
+      label: `${item.nationality} (${item.isoCode})`,
       group: item.region,
       keywords: item.keywords,
     }))
@@ -236,7 +228,7 @@ function buildPhoneCodeOptions(): SearchableSelectOption[] {
 
       return {
         value: item.phoneCode,
-        label: `${item.phoneCode} — ${uniqueCountries.join(" / ")}`,
+        label: `${item.phoneCode} — ${uniqueCountries.join(" / ")} (${uniqueIsoCodes.join(" / ")})`,
         group: uniqueRegions[0] ?? "Other",
         keywords: [...uniqueKeywords, ...uniqueCountries, ...uniqueIsoCodes],
       }
@@ -255,6 +247,20 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     const [error, setError] = useState<string | null>(null)
     const [formData, setFormData] = useState<FormData>(initialFormData)
 
+    const resetForm = () => {
+      setIsSubmitted(false)
+      setError(null)
+      setIsLoading(false)
+      setFormData((prev) => ({
+        ...initialFormData,
+        referral_code: prev.referral_code,
+      }))
+    }
+
+    useImperativeHandle(ref, () => ({
+      resetForm,
+    }))
+
     useEffect(() => {
       const params = new URLSearchParams(window.location.search)
       const refCode = params.get("ref") || ""
@@ -266,18 +272,6 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
         }))
       }
     }, [])
-
-    useImperativeHandle(ref, () => ({
-      resetForm: () => {
-        setIsSubmitted(false)
-        setError(null)
-        setIsLoading(false)
-        setFormData((prev) => ({
-          ...initialFormData,
-          referral_code: prev.referral_code,
-        }))
-      },
-    }))
 
     const handleInputChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -315,16 +309,6 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       }
 
       return null
-    }
-
-    const resetForm = () => {
-      setIsSubmitted(false)
-      setError(null)
-      setIsLoading(false)
-      setFormData((prev) => ({
-        ...initialFormData,
-        referral_code: prev.referral_code,
-      }))
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
