@@ -25,6 +25,7 @@ type SearchableSelectProps = {
   emptyMessage?: string
   disabled?: boolean
   dropdownClassName?: string
+  selectedLabel?: string
 }
 
 type GroupedOptions = {
@@ -41,6 +42,7 @@ export function SearchableSelect({
   emptyMessage = "No results found.",
   disabled = false,
   dropdownClassName = "w-full",
+  selectedLabel,
 }: SearchableSelectProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const searchInputRef = useRef<HTMLInputElement | null>(null)
@@ -183,10 +185,10 @@ export function SearchableSelect({
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <span className={selectedOption ? "text-foreground" : "text-muted-foreground"}>
-          {selectedOption?.label || placeholder}
+        <span className={selectedOption ? "text-foreground truncate" : "text-muted-foreground truncate"}>
+          {selectedOption ? selectedLabel ?? selectedOption.label : placeholder}
         </span>
-        <span className="ml-2 text-muted-foreground">▾</span>
+        <span className="ml-2 shrink-0 text-muted-foreground">▾</span>
       </button>
 
       {open && (
