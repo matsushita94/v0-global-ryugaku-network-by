@@ -240,6 +240,10 @@ function findPhoneCodeByCountry(country: string): string {
   return matchedCountry?.phoneCode ?? ""
 }
 
+function getShortPhoneCodeLabel(phoneCode: string): string {
+  return phoneCode || "Code"
+}
+
 const desiredStartDates = generateDesiredStartDates()
 const countryOptions = buildCountryOptions()
 const nationalityOptions = buildNationalityOptions()
@@ -250,12 +254,14 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [phoneCodeTouched, setPhoneCodeTouched] = useState(false)
     const [formData, setFormData] = useState<FormData>(initialFormData)
 
     const resetForm = () => {
       setIsSubmitted(false)
       setError(null)
       setIsLoading(false)
+      setPhoneCodeTouched(false)
       setFormData((prev) => ({
         ...initialFormData,
         referral_code: prev.referral_code,
@@ -289,6 +295,10 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     }
 
     const handleSelectChange = (name: keyof FormData, value: string) => {
+      if (name === "phone_country") {
+        setPhoneCodeTouched(true)
+      }
+
       setFormData((prev) => {
         const nextFormData = {
           ...prev,
@@ -298,7 +308,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
         if (name === "country_of_residence") {
           const suggestedPhoneCode = findPhoneCodeByCountry(value)
 
-          if (!prev.phone_country && suggestedPhoneCode) {
+          if (suggestedPhoneCode && !phoneCodeTouched) {
             nextFormData.phone_country = suggestedPhoneCode
           }
         }
@@ -377,6 +387,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
         }
 
         setIsSubmitted(true)
+        setPhoneCodeTouched(false)
         setFormData((prev) => ({
           ...initialFormData,
           referral_code: prev.referral_code,
@@ -474,6 +485,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                         searchPlaceholder="Search country, ISO, or code..."
                         emptyMessage="No phone code found."
                         dropdownClassName="w-max"
+                        selectedLabel={getShortPhoneCodeLabel(formData.phone_country)}
                       />
                     </div>
 
