@@ -44,7 +44,7 @@ const urgencyOptions = [
   "Just exploring",
 ]
 
-const preferredContactMethods = ["Email", "Phone", "WhatsApp"]
+const preferredContactMethods = ["Email", "Phone",]
 
 const budgetRanges = [
   "Under ¥500,000",
@@ -329,7 +329,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                 </Field>
 
                 <Field>
-                  <FieldLabel>Phone / WhatsApp</FieldLabel>
+                  <FieldLabel>Phone</FieldLabel>
                   <Input
                     name="phone"
                     value={formData.phone}
