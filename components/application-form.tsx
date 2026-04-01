@@ -235,6 +235,11 @@ function buildPhoneCodeOptions(): SearchableSelectOption[] {
     })
 }
 
+function findPhoneCodeByCountry(country: string): string {
+  const matchedCountry = countryData.find((item) => item.country === country)
+  return matchedCountry?.phoneCode ?? ""
+}
+
 const desiredStartDates = generateDesiredStartDates()
 const countryOptions = buildCountryOptions()
 const nationalityOptions = buildNationalityOptions()
@@ -284,10 +289,22 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     }
 
     const handleSelectChange = (name: keyof FormData, value: string) => {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }))
+      setFormData((prev) => {
+        const nextFormData = {
+          ...prev,
+          [name]: value,
+        }
+
+        if (name === "country_of_residence") {
+          const suggestedPhoneCode = findPhoneCodeByCountry(value)
+
+          if (!prev.phone_country && suggestedPhoneCode) {
+            nextFormData.phone_country = suggestedPhoneCode
+          }
+        }
+
+        return nextFormData
+      })
     }
 
     const validateForm = () => {
