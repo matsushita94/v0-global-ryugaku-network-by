@@ -44,7 +44,7 @@ const urgencyOptions = [
   "Just exploring",
 ]
 
-const preferredContactMethods = ["Email", "Phone",]
+const preferredContactMethods = ["Email", "Phone"]
 
 const budgetRanges = [
   "Under ¥500,000",
@@ -62,7 +62,8 @@ type StartDateOption = {
 type FormData = {
   full_name: string
   email: string
-  phone: string
+  phone_country: string
+  phone_number: string
   country_of_residence: string
   nationality: string
   japanese_level: string
@@ -79,7 +80,8 @@ type FormData = {
 const initialFormData: FormData = {
   full_name: "",
   email: "",
-  phone: "",
+  phone_country: "",
+  phone_number: "",
   country_of_residence: "",
   nationality: "",
   japanese_level: "",
@@ -221,11 +223,15 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
             ? null
             : formData.desired_start_date
 
+        const fullPhone = `${formData.phone_country} ${formData.phone_number}`
+          .replace(/\s+/g, " ")
+          .trim()
+
         const { error: insertError } = await supabase.from("students").insert([
           {
             full_name: formData.full_name,
             email: formData.email,
-            phone: formData.phone || null,
+            phone: fullPhone || null,
             country_of_residence: formData.country_of_residence,
             nationality: formData.nationality,
             japanese_level: formData.japanese_level,
@@ -330,11 +336,25 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
 
                 <Field>
                   <FieldLabel>Phone</FieldLabel>
-                  <Input
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                  />
+                  <div className="grid grid-cols-3 gap-2">
+                    <Input
+                      name="phone_country"
+                      value={formData.phone_country}
+                      onChange={handleInputChange}
+                      placeholder="+81"
+                      className="col-span-1"
+                    />
+                    <Input
+                      name="phone_number"
+                      value={formData.phone_number}
+                      onChange={handleInputChange}
+                      placeholder="90 1234 5678"
+                      className="col-span-2"
+                    />
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Example: +81 90 1234 5678
+                  </p>
                 </Field>
 
                 <Field>
