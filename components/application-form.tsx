@@ -118,26 +118,70 @@ function uniqueSortedStrings(values: string[]): string[] {
 }
 
 function buildCountryOptions(): SearchableSelectOption[] {
-  return countryData
-    .slice()
+  const countryMap = new Map<
+    string,
+    {
+      country: string
+      isoCode: string
+      region: string
+      flagEmoji: string
+      keywords: string[]
+    }
+  >()
+
+  for (const item of countryData) {
+    if (!countryMap.has(item.country)) {
+      countryMap.set(item.country, {
+        country: item.country,
+        isoCode: item.isoCode,
+        region: item.region,
+        flagEmoji: item.flagEmoji,
+        keywords: [item.country, item.isoCode, item.nationality, item.phoneCode],
+      })
+    }
+  }
+
+  return Array.from(countryMap.values())
     .sort((a, b) => a.country.localeCompare(b.country))
     .map((item) => ({
       value: item.country,
       label: `${item.flagEmoji} ${item.country} (${item.isoCode})`,
       group: item.region,
-      keywords: [item.country, item.isoCode, item.nationality, item.phoneCode],
+      keywords: item.keywords,
     }))
 }
 
 function buildNationalityOptions(): SearchableSelectOption[] {
-  return countryData
-    .slice()
+  const nationalityMap = new Map<
+    string,
+    {
+      nationality: string
+      isoCode: string
+      region: string
+      flagEmoji: string
+      keywords: string[]
+    }
+  >()
+
+  for (const item of countryData) {
+    if (!nationalityMap.has(item.nationality)) {
+      nationalityMap.set(item.nationality, {
+        nationality: item.nationality,
+        isoCode: item.isoCode,
+        region: item.region,
+        flagEmoji: item.flagEmoji,
+        keywords: [item.nationality, item.country, item.isoCode, item.phoneCode],
+      })
+    }
+  }
+
+  return Array.from(nationalityMap.values())
     .sort((a, b) => a.nationality.localeCompare(b.nationality))
     .map((item) => ({
       value: item.nationality,
       label: `${item.flagEmoji} ${item.nationality} (${item.isoCode})`,
       group: item.region,
-      keywords: [item.nationality, item.country, item.isoCode, item.phoneCode],
+      keywords: item.keywords,
     }))
 }
 
