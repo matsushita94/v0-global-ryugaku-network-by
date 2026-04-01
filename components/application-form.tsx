@@ -136,7 +136,7 @@ function uniquePhoneCodeOptions(): SelectOption[] {
 
     options.push({
       value: item.phoneCode,
-      label: `${item.phoneCode} (${item.country})`,
+      label: `${item.country} (${item.phoneCode})`,
     })
   }
 
