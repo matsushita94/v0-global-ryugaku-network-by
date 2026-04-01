@@ -177,7 +177,7 @@ export function SearchableSelect({
 
           <div
             role="listbox"
-            className="max-h-64 overflow-y-auto p-1"
+            className="max-h-72 overflow-y-auto p-1"
           >
             {filteredOptions.length === 0 ? (
               <div className="px-3 py-2 text-sm text-muted-foreground">
