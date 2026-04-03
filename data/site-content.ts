@@ -98,3 +98,50 @@ export const aboutFeatures: AboutFeature[] = [
       "We help students understand the application process and prepare for studying in Japan.",
   },
 ]
+export type StudyAbroadBenefit = {
+  title: string
+  description: string
+}
+
+export const studyAbroadBenefits: StudyAbroadBenefit[] = [
+  {
+    title: "Access to New Opportunities",
+    description:
+      "Studying abroad can open doors to new academic, cultural, and personal experiences that are difficult to gain from staying in one place.",
+  },
+  {
+    title: "Language and Communication Growth",
+    description:
+      "Living and studying in a different environment helps students improve communication skills, cultural understanding, and confidence.",
+  },
+  {
+    title: "Personal Development",
+    description:
+      "Students often become more independent, adaptable, and resilient through the experience of studying in another country.",
+  },
+  {
+    title: "Broader Career Perspective",
+    description:
+      "International study can help students build a wider perspective that supports future career planning and long-term goals.",
+  },
+]
+
+export type StudyAbroadHighlight = {
+  value: string
+  label: string
+}
+
+export const studyAbroadHighlights: StudyAbroadHighlight[] = [
+  {
+    value: "Japan",
+    label: "Current main focus",
+  },
+  {
+    value: "Step by step",
+    label: "Careful network growth",
+  },
+  {
+    value: "Personal",
+    label: "Guidance approach",
+  },
+]
