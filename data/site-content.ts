@@ -171,7 +171,7 @@ export const destinations: Destination[] = [
   description:
     "A major industrial and education hub offering a balance between city life and affordability, with strong opportunities in engineering, manufacturing, and practical study paths.",
   image:
-    "https://images.unsplash.com/photo-1601823984263-b87b59798b70?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1624253321171-1be53e12f5f6?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Kyoto",
