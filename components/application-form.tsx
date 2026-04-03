@@ -1,6 +1,11 @@
 "use client"
 
-import { useState, useEffect, forwardRef, useImperativeHandle } from "react"
+import {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -80,8 +85,8 @@ function generateDesiredStartDates(count = 6): StartDateOption[] {
   const now = new Date()
   const currentYear = now.getFullYear()
   const currentMonth = now.getMonth() + 1
-
   const options: StartDateOption[] = []
+
   let year = currentYear
 
   while (options.length < count) {
@@ -130,7 +135,12 @@ function buildCountryOptions(): SearchableSelectOption[] {
         country: item.country,
         isoCode: item.isoCode,
         region: item.region,
-        keywords: [item.country, item.isoCode, item.nationality, item.phoneCode],
+        keywords: [
+          item.country,
+          item.isoCode,
+          item.nationality,
+          item.phoneCode,
+        ],
       })
     }
   }
@@ -162,7 +172,12 @@ function buildNationalityOptions(): SearchableSelectOption[] {
         nationality: item.nationality,
         isoCode: item.isoCode,
         region: item.region,
-        keywords: [item.nationality, item.country, item.isoCode, item.phoneCode],
+        keywords: [
+          item.nationality,
+          item.country,
+          item.isoCode,
+          item.phoneCode,
+        ],
       })
     }
   }
@@ -255,7 +270,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [phoneCodeTouched, setPhoneCodeTouched] = useState(false)
-    const [formData, setFormData] = useState<FormData>(initialFormData)
+    const [formData, setFormData] = useState(initialFormData)
 
     const resetForm = () => {
       setIsSubmitted(false)
@@ -279,7 +294,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       if (refCode) {
         setFormData((prev) => ({
           ...prev,
-          referral_code: refCode,
+          referral_code: refCode.toUpperCase(),
         }))
       }
     }, [])
@@ -288,9 +303,13 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
       const { name, value } = e.target
+
       setFormData((prev) => ({
         ...prev,
-        [name]: value,
+        [name]:
+          name === "referral_code"
+            ? value.toUpperCase()
+            : value,
       }))
     }
 
@@ -338,7 +357,7 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
       return null
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault()
 
       const validationError = validateForm()
@@ -405,249 +424,271 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
 
     if (isSubmitted) {
       return (
-        <section id="apply" className="bg-blue-700 section-spacing text-white">
-          <div className="section-container text-center">
-            <CheckCircle2 className="mx-auto mb-6 h-16 w-16" />
-            <h2 className="section-title text-white">Application Received</h2>
-            <p className="mt-4 text-lg opacity-90">
-              Thank you. We will review your details and contact you soon.
-            </p>
+        <section id="application-form" className="bg-white section-spacing">
+          <div className="section-container">
+            <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-10">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600">
+                <CheckCircle2 className="h-8 w-8" />
+              </div>
 
-            <Button
-              variant="outline"
-              className="mt-6 border-white text-white hover:bg-white hover:text-blue-700"
-              onClick={resetForm}
-            >
-              Submit Another
-            </Button>
+              <p className="mt-6 section-eyebrow">Application Received</p>
+
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                Thank you
+              </h2>
+
+              <p className="mt-4 text-base leading-8 text-slate-600">
+                We will review your details and contact you soon.
+              </p>
+
+              <Button
+                type="button"
+                className="mt-8"
+                onClick={resetForm}
+              >
+                Submit Another
+              </Button>
+            </div>
           </div>
         </section>
       )
     }
 
     return (
-      <section id="apply" className="bg-slate-50 section-spacing">
+      <section id="application-form" className="bg-white section-spacing">
         <div className="section-container">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="section-eyebrow">Apply</p>
-            <h2 className="section-title">Start Your Journey</h2>
-            <p className="section-subtext mx-auto">
-              Fill in the form and we will guide you step by step based on your
-              study goals, timing, and current situation.
-            </p>
-          </div>
+          <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="section-eyebrow">Apply</p>
 
-          {error && (
-            <div className="mx-auto mt-8 flex max-w-3xl gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-              <AlertCircle className="h-5 w-5 shrink-0" />
-              <span>{error}</span>
+              <h2 className="section-title">Start Your Journey</h2>
+
+              <p className="section-subtext mx-auto">
+                Fill in the form and we will guide you step by step based on your
+                study goals, timing, and current situation.
+              </p>
             </div>
-          )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="premium-card mx-auto mt-10 max-w-3xl"
-          >
-            <FieldGroup>
-              <div className="grid gap-6 md:grid-cols-2">
-                <Field>
-                  <FieldLabel>Full Name</FieldLabel>
-                  <Input
-                    name="full_name"
-                    value={formData.full_name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Field>
+            {error && (
+              <div className="mt-8 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
 
-                <Field>
-                  <FieldLabel>Email</FieldLabel>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Field>
+            <form onSubmit={handleSubmit} className="mt-8">
+              <FieldGroup>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Field>
+                    <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
+                    <Input
+                      id="full_name"
+                      name="full_name"
+                      value={formData.full_name}
+                      onChange={handleInputChange}
+                      placeholder="Enter your full name"
+                      autoComplete="name"
+                    />
+                  </Field>
+
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email"
+                      autoComplete="email"
+                    />
+                  </Field>
+                </div>
 
                 <Field>
                   <FieldLabel>Phone</FieldLabel>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="col-span-1">
-                      <SearchableSelect
-                        value={formData.phone_country}
-                        onValueChange={(value) =>
-                          handleSelectChange("phone_country", value)
-                        }
-                        options={phoneCodeOptions}
-                        placeholder="Code"
-                        searchPlaceholder="Search country, ISO, or code..."
-                        emptyMessage="No phone code found."
-                        dropdownClassName="w-max"
-                        selectedLabel={getShortPhoneCodeLabel(formData.phone_country)}
-                      />
-                    </div>
+                  <div className="grid grid-cols-[160px_1fr] gap-3">
+                    <SearchableSelect
+                      value={formData.phone_country}
+                      onValueChange={(value) =>
+                        handleSelectChange("phone_country", value)
+                      }
+                      options={phoneCodeOptions}
+                      placeholder="Code"
+                      searchPlaceholder="Search country, ISO, or code..."
+                      emptyMessage="No phone code found."
+                      dropdownClassName="w-max"
+                      selectedLabel={getShortPhoneCodeLabel(formData.phone_country)}
+                    />
 
                     <Input
-                      type="tel"
+                      id="phone_number"
                       name="phone_number"
                       value={formData.phone_number}
                       onChange={handleInputChange}
-                      placeholder="90 1234 5678"
-                      className="col-span-2"
+                      placeholder="Phone number"
+                      autoComplete="tel-national"
                     />
                   </div>
 
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-2 text-xs text-slate-500">
                     Example: +81 90 1234 5678
                   </p>
                 </Field>
 
-                <Field>
-                  <FieldLabel>Country of Residence</FieldLabel>
-                  <SearchableSelect
-                    value={formData.country_of_residence}
-                    onValueChange={(value) =>
-                      handleSelectChange("country_of_residence", value)
-                    }
-                    options={countryOptions}
-                    placeholder="Select country"
-                    searchPlaceholder="Search country or ISO..."
-                    emptyMessage="No country found."
-                    dropdownClassName="w-full"
-                  />
-                </Field>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Field>
+                    <FieldLabel>Country of Residence</FieldLabel>
+                    <SearchableSelect
+                      value={formData.country_of_residence}
+                      onValueChange={(value) =>
+                        handleSelectChange("country_of_residence", value)
+                      }
+                      options={countryOptions}
+                      placeholder="Select country"
+                      searchPlaceholder="Search country or ISO..."
+                      emptyMessage="No country found."
+                      dropdownClassName="w-full"
+                    />
+                  </Field>
 
-                <Field>
-                  <FieldLabel>Nationality</FieldLabel>
-                  <SearchableSelect
-                    value={formData.nationality}
-                    onValueChange={(value) =>
-                      handleSelectChange("nationality", value)
-                    }
-                    options={nationalityOptions}
-                    placeholder="Select nationality"
-                    searchPlaceholder="Search nationality or ISO..."
-                    emptyMessage="No nationality found."
-                    dropdownClassName="w-full"
-                  />
-                </Field>
+                  <Field>
+                    <FieldLabel>Nationality</FieldLabel>
+                    <SearchableSelect
+                      value={formData.nationality}
+                      onValueChange={(value) =>
+                        handleSelectChange("nationality", value)
+                      }
+                      options={nationalityOptions}
+                      placeholder="Select nationality"
+                      searchPlaceholder="Search nationality or ISO..."
+                      emptyMessage="No nationality found."
+                      dropdownClassName="w-full"
+                    />
+                  </Field>
+                </div>
 
-                <Field>
-                  <FieldLabel>Desired City</FieldLabel>
-                  <Input
-                    name="desired_city"
-                    value={formData.desired_city}
-                    onChange={handleInputChange}
-                    placeholder="Tokyo, Osaka, Kyoto, or Not Sure Yet"
-                  />
-                </Field>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Field>
+                    <FieldLabel htmlFor="desired_city">Desired City</FieldLabel>
+                    <Input
+                      id="desired_city"
+                      name="desired_city"
+                      value={formData.desired_city}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Tokyo, Osaka, Nagoya"
+                    />
+                  </Field>
 
-                <Field>
-                  <FieldLabel>Desired Program</FieldLabel>
-                  <Select
-                    value={formData.desired_program}
-                    onValueChange={(value) =>
-                      handleSelectChange("desired_program", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select program" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {programTypes.map((program) => (
-                        <SelectItem key={program} value={program}>
-                          {program}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
+                  <Field>
+                    <FieldLabel>Desired Program</FieldLabel>
+                    <Select
+                      value={formData.desired_program}
+                      onValueChange={(value) =>
+                        handleSelectChange("desired_program", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select program" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {programTypes.map((program) => (
+                          <SelectItem key={program} value={program}>
+                            {program}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
 
-                <Field>
-                  <FieldLabel>Desired Start Date</FieldLabel>
-                  <Select
-                    value={formData.desired_start_date}
-                    onValueChange={(value) =>
-                      handleSelectChange("desired_start_date", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select start date" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {desiredStartDates.map((date) => (
-                        <SelectItem key={date.value} value={date.value}>
-                          {date.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Field>
+                    <FieldLabel>Desired Start Date</FieldLabel>
+                    <Select
+                      value={formData.desired_start_date}
+                      onValueChange={(value) =>
+                        handleSelectChange("desired_start_date", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select start date" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {desiredStartDates.map((date) => (
+                          <SelectItem key={date.value} value={date.value}>
+                            {date.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
 
-                <Field>
-                  <FieldLabel>Japanese Level</FieldLabel>
-                  <Select
-                    value={formData.japanese_level}
-                    onValueChange={(value) =>
-                      handleSelectChange("japanese_level", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Japanese level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {japaneseLevels.map((level) => (
-                        <SelectItem key={level} value={level}>
-                          {level}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
+                  <Field>
+                    <FieldLabel>Japanese Level</FieldLabel>
+                    <Select
+                      value={formData.japanese_level}
+                      onValueChange={(value) =>
+                        handleSelectChange("japanese_level", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {japaneseLevels.map((level) => (
+                          <SelectItem key={level} value={level}>
+                            {level}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
 
-                <Field>
-                  <FieldLabel>Budget Range</FieldLabel>
-                  <Select
-                    value={formData.budget_range}
-                    onValueChange={(value) =>
-                      handleSelectChange("budget_range", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select budget range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {budgetRanges.map((range) => (
-                        <SelectItem key={range} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Field>
+                    <FieldLabel>Budget Range</FieldLabel>
+                    <Select
+                      value={formData.budget_range}
+                      onValueChange={(value) =>
+                        handleSelectChange("budget_range", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select budget range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {budgetRanges.map((range) => (
+                          <SelectItem key={range} value={range}>
+                            {range}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
 
-                <Field>
-                  <FieldLabel>Urgency</FieldLabel>
-                  <Select
-                    value={formData.urgency}
-                    onValueChange={(value) =>
-                      handleSelectChange("urgency", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select urgency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {urgencyOptions.map((option) => (
-                        <SelectItem key={option} value={option}>
-                          {option}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
+                  <Field>
+                    <FieldLabel>Urgency</FieldLabel>
+                    <Select
+                      value={formData.urgency}
+                      onValueChange={(value) =>
+                        handleSelectChange("urgency", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select urgency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {urgencyOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
 
                 <Field>
                   <FieldLabel>Preferred Contact Method</FieldLabel>
@@ -669,25 +710,46 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
                     </SelectContent>
                   </Select>
                 </Field>
-              </div>
 
-              <Field className="mt-6">
-                <FieldLabel>Message</FieldLabel>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={5}
-                  placeholder="Tell us about your goals, timing, or any questions you have."
-                />
-              </Field>
-            </FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="referral_code">
+                    Referral Code (optional)
+                  </FieldLabel>
+                  <Input
+                    id="referral_code"
+                    name="referral_code"
+                    value={formData.referral_code}
+                    onChange={handleInputChange}
+                    placeholder="Enter referral code if you have one"
+                  />
+                  <p className="mt-2 text-xs text-slate-500">
+                    If someone referred you, please enter their referral code.
+                  </p>
+                </Field>
 
-            <Button type="submit" className="mt-8 w-full" disabled={isLoading}>
-              {isLoading ? "Submitting..." : "Start Your Journey"}
-              {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
-            </Button>
-          </form>
+                <Field>
+                  <FieldLabel htmlFor="message">Message</FieldLabel>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tell us about your goals or questions"
+                    rows={6}
+                  />
+                </Field>
+              </FieldGroup>
+
+              <Button
+                type="submit"
+                className="mt-8 w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? "Submitting..." : "Start Your Journey"}
+                {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
+              </Button>
+            </form>
+          </div>
         </div>
       </section>
     )
