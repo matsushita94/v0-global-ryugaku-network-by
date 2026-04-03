@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { destinations, type Destination } from "@/data/site-content"
 
 export function Destinations() {
@@ -17,17 +18,20 @@ export function Destinations() {
           </p>
         </div>
 
-        <div className="mx-auto mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {destinations.map((destination: Destination) => (
             <div
               key={destination.name}
               className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
                   src={destination.image}
                   alt={destination.name}
-                  className="h-full w-full object-cover transition duration-300 hover:scale-105"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  priority={destination.name === "Tokyo"}
                 />
               </div>
 
