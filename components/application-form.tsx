@@ -39,6 +39,8 @@ type StartDateOption = {
 
 type FormData = {
   full_name: string
+  first_name: string
+  last_name: string
   email: string
   phone_country: string
   phone_number: string
@@ -56,7 +58,8 @@ type FormData = {
 }
 
 const initialFormData: FormData = {
-  full_name: "",
+  first_name: "",
+  last_name: "",
   email: "",
   phone_country: "",
   phone_number: "",
@@ -337,7 +340,10 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
     }
 
     const validateForm = () => {
-      if (!formData.full_name.trim()) return "Please enter your full name"
+      if (!formData.first_name.trim())
+      return "Please enter your first name"
+      if (!formData.last_name.trim())
+      return "Please enter your last name"
       if (!formData.email.trim()) return "Please enter your email"
       if (!formData.country_of_residence.trim()) {
         return "Please select your country of residence"
@@ -380,7 +386,9 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
           .trim()
 
         const payload = {
-          full_name: formData.full_name.trim(),
+          first_name: formData.first_name.trim(),
+          last_name: formData.last_name.trim(),
+          full_name: `${formData.first_name} ${formData.last_name}`.trim(),
           email: formData.email.trim(),
           phone: fullPhone || null,
           country_of_residence: formData.country_of_residence.trim(),
@@ -479,17 +487,31 @@ export const ApplicationForm = forwardRef<{ resetForm: () => void }>(
             <form onSubmit={handleSubmit} className="mt-8">
               <FieldGroup>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <Field>
-                    <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
-                    <Input
-                      id="full_name"
-                      name="full_name"
-                      value={formData.full_name}
-                      onChange={handleInputChange}
-                      placeholder="Enter your full name"
-                      autoComplete="name"
-                    />
-                  </Field>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <Field>
+    <FieldLabel htmlFor="first_name">First Name</FieldLabel>
+    <Input
+      id="first_name"
+      name="first_name"
+      value={formData.first_name}
+      onChange={handleInputChange}
+      placeholder="First name"
+      autoComplete="given-name"
+    />
+  </Field>
+
+  <Field>
+    <FieldLabel htmlFor="last_name">Last Name</FieldLabel>
+    <Input
+      id="last_name"
+      name="last_name"
+      value={formData.last_name}
+      onChange={handleInputChange}
+      placeholder="Last name"
+      autoComplete="family-name"
+    />
+  </Field>
+</div>
 
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
