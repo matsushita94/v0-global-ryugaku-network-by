@@ -210,3 +210,35 @@ export const contactInfo: ContactInfoItem[] = [
     href: null,
   },
 ]
+export type PartnerBenefit = {
+  iconName: string
+  title: string
+  description: string
+}
+
+export const partnerBenefits: PartnerBenefit[] = [
+  {
+    iconName: "Users",
+    title: "Access to Global Students",
+    description:
+      "Connect with students from different countries who are actively looking for study opportunities.",
+  },
+  {
+    iconName: "Handshake",
+    title: "Simple Collaboration",
+    description:
+      "We focus on building straightforward and transparent partnerships with education providers.",
+  },
+  {
+    iconName: "Globe",
+    title: "Growing Network",
+    description:
+      "Be part of a network that is gradually expanding beyond Japan into global education opportunities.",
+  },
+  {
+    iconName: "TrendingUp",
+    title: "Long-Term Growth",
+    description:
+      "Our goal is to build sustainable partnerships that grow over time, not short-term transactions.",
+  },
+]
