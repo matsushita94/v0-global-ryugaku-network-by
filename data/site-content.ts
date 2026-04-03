@@ -177,3 +177,36 @@ export const destinations: Destination[] = [
     image: "/images/Kyoto.jpg",
   },
 ]
+export type ContactInfoItem = {
+  iconName: string
+  label: string
+  value: string
+  href?: string | null
+}
+
+export const contactInfo: ContactInfoItem[] = [
+  {
+    iconName: "Mail",
+    label: "Email",
+    value: "info@globalryugakunetwork.com",
+    href: "mailto:info@globalryugakunetwork.com",
+  },
+  {
+    iconName: "Phone",
+    label: "Phone",
+    value: "+81 70-9066-5906",
+    href: "tel:+817090665906",
+  },
+  {
+    iconName: "MapPin",
+    label: "Location",
+    value: "Wakayama-shi, Japan",
+    href: null,
+  },
+  {
+    iconName: "Clock",
+    label: "Hours",
+    value: "24 hours",
+    href: null,
+  },
+]
