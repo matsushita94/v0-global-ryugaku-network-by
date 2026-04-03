@@ -145,3 +145,32 @@ export const studyAbroadHighlights: StudyAbroadHighlight[] = [
     label: "Guidance approach",
   },
 ]
+export type Destination = {
+  name: string
+  description: string
+  image: string
+}
+
+export const destinations: Destination[] = [
+  {
+    name: "Tokyo",
+    description:
+      "A dynamic global city with a wide range of language schools, universities, and career-focused study opportunities.",
+    image:
+      "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "Osaka",
+    description:
+      "Known for its energy, accessibility, and friendly atmosphere, Osaka is a popular choice for students seeking both study and city life.",
+    image:
+      "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "Kyoto",
+    description:
+      "A city that blends traditional culture with modern education, offering a unique environment for international students.",
+    image:
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80",
+  },
+]
