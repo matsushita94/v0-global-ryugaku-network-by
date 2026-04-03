@@ -157,7 +157,7 @@ export const destinations: Destination[] = [
     description:
       "A dynamic global city with a wide range of language schools, universities, and career-focused study opportunities.",
     image:
-      "https://images.unsplash.com/photo-1505069446780-4ef442b5207f",
+      "https://images.unsplash.com/photo-1513407030348-c983a97b98d8",
   },
   {
     name: "Osaka",
