@@ -167,6 +167,13 @@ export const destinations: Destination[] = [
       "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1200&q=80",
   },
   {
+  name: "Nagoya",
+  description:
+    "A major industrial and education hub offering a balance between city life and affordability, with strong opportunities in engineering, manufacturing, and practical study paths.",
+  image:
+    "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
     name: "Kyoto",
     description:
       "A city that blends traditional culture with modern education, offering a unique environment for international students.",
