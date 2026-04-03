@@ -4,39 +4,33 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, MapPin, Phone, Clock, Send, CheckCircle2 } from "lucide-react"
+import {
+  Mail,
+  MapPin,
+  Phone,
+  Clock,
+  Send,
+  CheckCircle2,
+} from "lucide-react"
 
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "info@globalryugakunetwork.com",
-    href: "mailto:info@globalryugakunetwork.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+81 70-9066-5906",
-    href: "tel:+817090665906",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Wakayama-shi, Japan",
-    href: null,
-  },
-  {
-    icon: Clock,
-    label: "Hours",
-    value: "24 hours",
-    href: null,
-  },
-]
+import {
+  contactInfo,
+  type ContactInfoItem,
+} from "@/data/site-content"
+
+const iconMap = {
+  Mail,
+  MapPin,
+  Phone,
+  Clock,
+}
+
+type ContactFormEvent = React.FormEvent<HTMLFormElement>
 
 export function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: ContactFormEvent) => {
     e.preventDefault()
     setIsSubmitted(true)
   }
@@ -44,80 +38,89 @@ export function Contact() {
   return (
     <section id="contact" className="bg-white section-spacing">
       <div className="section-container">
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div>
-            <p className="section-eyebrow">Contact</p>
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="section-eyebrow">Contact</p>
 
-            <h2 className="section-title">
-              Contact Us
-            </h2>
+          <h2 className="section-title">
+            Contact Us
+          </h2>
 
-            <p className="section-subtext">
-              We currently help students study in Japan and are expanding globally.
-            </p>
+          <p className="section-subtext mx-auto">
+            We currently help students study in Japan and are expanding globally.
+          </p>
+        </div>
 
+        <div className="mx-auto mt-16 grid max-w-6xl gap-10 lg:grid-cols-2">
+          <div className="premium-card">
             {isSubmitted ? (
-              <div className="mt-8 rounded-2xl border border-green-200 bg-green-50 p-6">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-green-600" />
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    Message received
-                  </h3>
+              <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600">
+                  <CheckCircle2 className="h-8 w-8" />
                 </div>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <h3 className="mt-6 text-2xl font-semibold text-slate-900">
+                  Message received
+                </h3>
+
+                <p className="mt-3 max-w-md text-slate-600">
                   Thank you for contacting us. We will get back to you as soon as possible.
                 </p>
 
                 <Button
                   type="button"
-                  variant="outline"
-                  className="mt-4"
                   onClick={() => setIsSubmitted(false)}
+                  className="mt-8"
                 >
                   Send another message
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-sm font-medium text-slate-700"
-                  >
-                    Name
-                  </label>
-                  <Input id="name" name="name" placeholder="Your name" required />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="contact-name"
+                      className="text-sm font-medium text-slate-700"
+                    >
+                      Name
+                    </label>
+                    <Input
+                      id="contact-name"
+                      name="name"
+                      placeholder="Your name"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="contact-email"
+                      className="text-sm font-medium text-slate-700"
+                    >
+                      Email
+                    </label>
+                    <Input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      placeholder="Your email address"
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-slate-700"
-                  >
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="mb-2 block text-sm font-medium text-slate-700"
+                    htmlFor="contact-message"
+                    className="text-sm font-medium text-slate-700"
                   >
                     Message
                   </label>
                   <Textarea
-                    id="message"
+                    id="contact-message"
                     name="message"
-                    placeholder="Write your message"
-                    className="min-h-[140px]"
+                    placeholder="How can we help you?"
+                    className="min-h-[160px]"
                     required
                   />
                 </div>
@@ -131,11 +134,13 @@ export function Contact() {
           </div>
 
           <div className="flex flex-col justify-center">
-            <h3 className="text-xl font-semibold text-slate-900">Get in touch</h3>
+            <h3 className="text-xl font-semibold text-slate-900">
+              Get in touch
+            </h3>
 
             <div className="mt-8 space-y-6">
-              {contactInfo.map((item) => {
-                const Icon = item.icon
+              {contactInfo.map((item: ContactInfoItem) => {
+                const Icon = iconMap[item.iconName as keyof typeof iconMap]
 
                 return (
                   <div key={item.label} className="flex items-start gap-4">
@@ -165,9 +170,12 @@ export function Contact() {
             </div>
 
             <div className="mt-10 rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200">
-              <h4 className="font-semibold text-slate-900">Current focus</h4>
+              <h4 className="font-semibold text-slate-900">
+                Current focus
+              </h4>
+
               <p className="mt-2 text-sm text-slate-600">
-                We are currently focused on helping students study in Japan and expanding globally step by step.
+                We are currently focused on helping students study in Japan and expanding globally.
               </p>
             </div>
           </div>
