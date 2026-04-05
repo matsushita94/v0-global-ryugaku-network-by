@@ -1,37 +1,9 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { supabase } from "@/lib/supabase"
-
-type PartnerRow = {
-  id: string
-  created_at: string | null
-  partner_name: string | null
-  partner_type: string | null
-  country: string | null
-  contact_person: string | null
-  contact_email: string | null
-  contact_phone: string | null
-  referral_code: string | null
-  commission_amount: number | null
-  commission_currency: string | null
-  payment_terms: string | null
-  status: string | null
-}
-
-function formatDate(dateValue: string | null) {
-  if (!dateValue) return "—"
-
-  const date = new Date(dateValue)
-  if (Number.isNaN(date.getTime())) return "—"
-
-  return date.toLocaleDateString()
-}
-
-function formatCommission(amount: number | null, currency: string | null) {
-  if (amount === null || amount === undefined) return "—"
-  return `${amount}${currency ? ` ${currency}` : ""}`
-}
+import { formatAdminDate, formatCommission } from "@/lib/admin-formatters"
+import { getPartners } from "@/lib/queries/partners"
+import type { PartnerRow } from "@/lib/types/admin"
 
 export function PartnersTable() {
   const [partners, setPartners] = useState<PartnerRow[]>([])
@@ -43,28 +15,30 @@ export function PartnersTable() {
     let isMounted = true
 
     async function loadPartners() {
-      setIsLoading(true)
-      setErrorMessage("")
+      try {
+        setIsLoading(true)
+        setErrorMessage("")
 
-      const { data, error } = await supabase
-        .from("partners")
-        .select(
-          "id, created_at, partner_name, partner_type, country, contact_person, contact_email, contact_phone, referral_code, commission_amount, commission_currency, payment_terms, status"
+        const nextPartners = await getPartners()
+
+        if (!isMounted) {
+          return
+        }
+
+        setPartners(nextPartners)
+      } catch (error) {
+        if (!isMounted) {
+          return
+        }
+
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to load partners."
         )
-        .order("created_at", { ascending: false })
-
-      if (!isMounted) {
-        return
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
-
-      if (error) {
-        setErrorMessage(error.message)
-        setIsLoading(false)
-        return
-      }
-
-      setPartners((data ?? []) as PartnerRow[])
-      setIsLoading(false)
     }
 
     loadPartners()
@@ -77,7 +51,9 @@ export function PartnersTable() {
   const filteredPartners = useMemo(() => {
     const normalized = searchTerm.trim().toLowerCase()
 
-    if (!normalized) return partners
+    if (!normalized) {
+      return partners
+    }
 
     return partners.filter((partner) => {
       const values = [
@@ -156,7 +132,7 @@ export function PartnersTable() {
                       className="border-b border-slate-100 last:border-b-0"
                     >
                       <td className="px-4 py-3 text-slate-600">
-                        {formatDate(partner.created_at)}
+                        {formatAdminDate(partner.created_at)}
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-900">
                         {partner.partner_name || "—"}
