@@ -1,15 +1,8 @@
 "use client"
 
 import { FormEvent, useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
-
-type ContentRow = {
-  id: string
-  section: string
-  field: string
-  value: string
-  updated_at?: string | null
-}
+import { getSiteContentItems, updateSiteContentValue } from "@/lib/queries/site-content"
+import type { ContentRow } from "@/lib/types/admin"
 
 export function ContentEditor() {
   const [items, setItems] = useState<ContentRow[]>([])
@@ -22,27 +15,30 @@ export function ContentEditor() {
     let isMounted = true
 
     async function loadContent() {
-      setIsLoading(true)
-      setErrorMessage("")
+      try {
+        setIsLoading(true)
+        setErrorMessage("")
 
-      const { data, error } = await supabase
-        .from("site_content")
-        .select("id, section, field, value, updated_at")
-        .order("section", { ascending: true })
-        .order("field", { ascending: true })
+        const nextItems = await getSiteContentItems()
 
-      if (!isMounted) {
-        return
+        if (!isMounted) {
+          return
+        }
+
+        setItems(nextItems)
+      } catch (error) {
+        if (!isMounted) {
+          return
+        }
+
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to load content."
+        )
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
-
-      if (error) {
-        setErrorMessage(error.message)
-        setIsLoading(false)
-        return
-      }
-
-      setItems((data ?? []) as ContentRow[])
-      setIsLoading(false)
     }
 
     loadContent()
@@ -60,25 +56,27 @@ export function ContentEditor() {
     )
   }
 
-  async function handleSave(event: FormEvent<HTMLFormElement>, item: ContentRow) {
+  async function handleSave(
+    event: FormEvent<HTMLFormElement>,
+    item: ContentRow
+  ) {
     event.preventDefault()
-    setIsSavingId(item.id)
-    setErrorMessage("")
-    setSuccessMessage("")
 
-    const { error } = await supabase
-      .from("site_content")
-      .update({ value: item.value })
-      .eq("id", item.id)
+    try {
+      setIsSavingId(item.id)
+      setErrorMessage("")
+      setSuccessMessage("")
 
-    if (error) {
-      setErrorMessage(error.message)
+      await updateSiteContentValue(item.id, item.value)
+
+      setSuccessMessage(`Saved ${item.section}.${item.field}`)
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to save content."
+      )
+    } finally {
       setIsSavingId(null)
-      return
     }
-
-    setSuccessMessage(`Saved ${item.section}.${item.field}`)
-    setIsSavingId(null)
   }
 
   if (isLoading) {
@@ -105,7 +103,7 @@ export function ContentEditor() {
 
       {items.length === 0 ? (
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
-          No site content found. Add rows to the <code>site_content</code> table first.
+          No site content found.
         </div>
       ) : (
         <div className="space-y-4">
