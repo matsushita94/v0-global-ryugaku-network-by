@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ReactNode } from "react"
+import { AdminSignOutButton } from "@/components/admin/admin-sign-out-button"
 import { adminNavigation } from "@/data/admin-navigation"
 
 type AdminShellProps = {
@@ -60,6 +61,8 @@ export function AdminShell({ title, description, children }: AdminShellProps) {
               )
             })}
           </nav>
+
+          <AdminSignOutButton />
         </aside>
 
         <main className="min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:p-6">
