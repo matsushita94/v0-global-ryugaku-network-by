@@ -1,14 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
-
-type OverviewCounts = {
-  students: number
-  partners: number
-  schools: number
-  siteContent: number
-}
+import { getAdminOverviewCounts } from "@/lib/queries/admin-overview"
+import type { OverviewCounts } from "@/lib/types/admin"
 
 export function AdminOverview() {
   const [counts, setCounts] = useState<OverviewCounts>({
@@ -17,7 +11,6 @@ export function AdminOverview() {
     schools: 0,
     siteContent: 0,
   })
-
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -25,43 +18,30 @@ export function AdminOverview() {
     let isMounted = true
 
     async function loadCounts() {
-      setIsLoading(true)
-      setErrorMessage("")
+      try {
+        setIsLoading(true)
+        setErrorMessage("")
 
-      const [studentsRes, partnersRes, schoolsRes, contentRes] =
-        await Promise.all([
-          supabase.from("students").select("*", { count: "exact", head: true }),
-          supabase.from("partners").select("*", { count: "exact", head: true }),
-          supabase.from("schools").select("*", { count: "exact", head: true }),
-          supabase
-            .from("site_content")
-            .select("*", { count: "exact", head: true }),
-        ])
+        const nextCounts = await getAdminOverviewCounts()
 
-      const firstError =
-        studentsRes.error ||
-        partnersRes.error ||
-        schoolsRes.error ||
-        contentRes.error
+        if (!isMounted) {
+          return
+        }
 
-      if (!isMounted) {
-        return
+        setCounts(nextCounts)
+      } catch (error) {
+        if (!isMounted) {
+          return
+        }
+
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to load overview."
+        )
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
-
-      if (firstError) {
-        setErrorMessage(firstError.message)
-        setIsLoading(false)
-        return
-      }
-
-      setCounts({
-        students: studentsRes.count ?? 0,
-        partners: partnersRes.count ?? 0,
-        schools: schoolsRes.count ?? 0,
-        siteContent: contentRes.count ?? 0,
-      })
-
-      setIsLoading(false)
     }
 
     loadCounts()
