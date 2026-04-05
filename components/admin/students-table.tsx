@@ -1,37 +1,9 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { supabase } from "@/lib/supabase"
-
-type StudentRow = {
-  id: string
-  created_at: string | null
-  first_name: string | null
-  last_name: string | null
-  email: string | null
-  phone: string | null
-  nationality: string | null
-  country_of_residence: string | null
-  desired_program: string | null
-  desired_city: string | null
-  referral_code: string | null
-  source: string | null
-  students_lead_status: string | null
-}
-
-function formatDate(dateValue: string | null) {
-  if (!dateValue) return "—"
-
-  const date = new Date(dateValue)
-  if (Number.isNaN(date.getTime())) return "—"
-
-  return date.toLocaleDateString()
-}
-
-function buildStudentName(firstName: string | null, lastName: string | null) {
-  const fullName = [firstName, lastName].filter(Boolean).join(" ").trim()
-  return fullName || "—"
-}
+import { buildStudentName, formatAdminDate } from "@/lib/admin-formatters"
+import { getStudents } from "@/lib/queries/students"
+import type { StudentRow } from "@/lib/types/admin"
 
 export function StudentsTable() {
   const [students, setStudents] = useState<StudentRow[]>([])
@@ -43,28 +15,30 @@ export function StudentsTable() {
     let isMounted = true
 
     async function loadStudents() {
-      setIsLoading(true)
-      setErrorMessage("")
+      try {
+        setIsLoading(true)
+        setErrorMessage("")
 
-      const { data, error } = await supabase
-        .from("students")
-        .select(
-          "id, created_at, first_name, last_name, email, phone, nationality, country_of_residence, desired_program, desired_city, referral_code, source, students_lead_status"
+        const nextStudents = await getStudents()
+
+        if (!isMounted) {
+          return
+        }
+
+        setStudents(nextStudents)
+      } catch (error) {
+        if (!isMounted) {
+          return
+        }
+
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to load students."
         )
-        .order("created_at", { ascending: false })
-
-      if (!isMounted) {
-        return
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
-
-      if (error) {
-        setErrorMessage(error.message)
-        setIsLoading(false)
-        return
-      }
-
-      setStudents((data ?? []) as StudentRow[])
-      setIsLoading(false)
     }
 
     loadStudents()
@@ -77,7 +51,9 @@ export function StudentsTable() {
   const filteredStudents = useMemo(() => {
     const normalized = searchTerm.trim().toLowerCase()
 
-    if (!normalized) return students
+    if (!normalized) {
+      return students
+    }
 
     return students.filter((student) => {
       const values = [
@@ -157,7 +133,7 @@ export function StudentsTable() {
                       className="border-b border-slate-100 last:border-b-0"
                     >
                       <td className="px-4 py-3 text-slate-600">
-                        {formatDate(student.created_at)}
+                        {formatAdminDate(student.created_at)}
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-900">
                         {buildStudentName(student.first_name, student.last_name)}
