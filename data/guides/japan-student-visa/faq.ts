@@ -1,17 +1,22 @@
-export const visaFaq = [
+export const visaGuideFaq = [
   {
     question: "What is a COE?",
     answer:
-      "COE stands for Certificate of Eligibility. It is issued by Japanese immigration and is required before applying for a student visa.",
-  },
-  {
-    question: "How long does the visa process take?",
-    answer:
-      "The full process can take several months depending on document preparation, school processing, and immigration timelines.",
+      "COE stands for Certificate of Eligibility. It is commonly used in the student visa process before applying for the actual visa.",
   },
   {
     question: "Do I apply for the visa myself?",
     answer:
-      "Yes. After receiving the COE, students typically apply for the visa at a Japanese embassy or consulate.",
+      "In many cases, yes. After the COE stage, the student typically applies at the relevant Japanese embassy or consulate.",
+  },
+  {
+    question: "How long does the process take?",
+    answer:
+      "The full process can take several months depending on document readiness, school screening, corrections, and immigration timing.",
+  },
+  {
+    question: "Can requirements vary?",
+    answer:
+      "Yes. Schools and embassies can request different supporting documents depending on the case and location.",
   },
 ]
