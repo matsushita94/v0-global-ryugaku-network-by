@@ -9,7 +9,7 @@
     <tspan fill="#F59E0B">N</tspan>
   </text>
 
-  <line x1="220" y1="40" x2="220" y2="112"
+  <line x1="225" y1="40" x2="225" y2="112"
         stroke="#272868"
         stroke-width="2"
         opacity="0.95"/>
