@@ -15,9 +15,9 @@
         opacity="0.95"/>
 
   <!-- Global -->
-  <text x="240" y="55"
+  <text x="240" y="60"
         font-family="Inter, Arial, sans-serif"
-        font-size="20"
+        font-size="25"
         font-weight="700">
     <tspan fill="#3B82F6">G</tspan><tspan fill="#1E3A8A">lobal</tspan>
   </text>
@@ -25,7 +25,7 @@
   <!-- Ryugaku -->
   <text x="240" y="83"
         font-family="Inter, Arial, sans-serif"
-        font-size="20"
+        font-size="25"
         font-weight="700">
     <tspan fill="#DC2626">R</tspan><tspan fill="#1E3A8A">yugaku</tspan>
   </text>
@@ -33,7 +33,7 @@
   <!-- Network -->
   <text x="240" y="110"
         font-family="Inter, Arial, sans-serif"
-        font-size="20"
+        font-size="25"
         font-weight="700">
     <tspan fill="#F59E0B">N</tspan><tspan fill="#1E3A8A">etwork</tspan>
   </text>
