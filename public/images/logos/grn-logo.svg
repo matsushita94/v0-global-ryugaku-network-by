@@ -1,0 +1,40 @@
+<svg width="760" height="140" viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg">
+  <text x="40" y="102"
+        font-family="Inter, Arial, sans-serif"
+        font-size="74"
+        font-weight="700"
+        letter-spacing="-10">
+    <tspan fill="#3B82F6">G</tspan>
+    <tspan fill="#DC2626">R</tspan>
+    <tspan fill="#F59E0B">N</tspan>
+  </text>
+
+  <line x1="205" y1="32" x2="205" y2="112"
+        stroke="#272868"
+        stroke-width="2"
+        opacity="0.95"/>
+
+  <!-- Global -->
+  <text x="210" y="56"
+        font-family="Inter, Arial, sans-serif"
+        font-size="27"
+        font-weight="600">
+    <tspan fill="#3B82F6">G</tspan><tspan fill="#1E3A8A">lobal</tspan>
+  </text>
+
+  <!-- Ryugaku -->
+  <text x="210" y="82"
+        font-family="Inter, Arial, sans-serif"
+        font-size="27"
+        font-weight="600">
+    <tspan fill="#DC2626">R</tspan><tspan fill="#1E3A8A">yugaku</tspan>
+  </text>
+
+  <!-- Network -->
+  <text x="210" y="110"
+        font-family="Inter, Arial, sans-serif"
+        font-size="27"
+        font-weight="600">
+    <tspan fill="#F59E0B">N</tspan><tspan fill="#1E3A8A">etwork</tspan>
+  </text>
+</svg>
