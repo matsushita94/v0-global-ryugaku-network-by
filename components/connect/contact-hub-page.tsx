@@ -14,6 +14,7 @@ import {
 import {
     contactHubContent,
     type ContactHubIconName,
+    type ContactHubLink,
 } from "@/data/contact-hub"
 
 const iconMap: Record<ContactHubIconName, LucideIcon> = {
@@ -22,6 +23,36 @@ const iconMap: Record<ContactHubIconName, LucideIcon> = {
     Globe,
     FileText,
     Handshake,
+}
+
+function LinkIcon({ link }: { link: ContactHubLink }) {
+    if (link.iconSrc) {
+        return (
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white">
+                <Image
+                    src={link.iconSrc}
+                    alt={link.iconAlt ?? link.label}
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 object-contain"
+                />
+            </div>
+        )
+    }
+
+    if (link.iconName) {
+        const Icon = iconMap[link.iconName]
+
+        return (
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition-colors duration-200 group-hover:bg-blue-50 group-hover:text-blue-700">
+                <Icon className="h-5 w-5" />
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100" />
+    )
 }
 
 export function ContactHubPage() {
@@ -47,10 +78,10 @@ export function ContactHubPage() {
                                 <Image
                                     src={contactHubContent.logoSrc}
                                     alt={contactHubContent.logoAlt}
-                                    width={380}
-                                    height={70}
+                                    width={760}
+                                    height={140}
                                     priority
-                                    className="h-auto w-full max-w-[340px]"
+                                    className="h-auto w-full max-w-[360px]"
                                 />
                             </div>
 
@@ -66,7 +97,6 @@ export function ContactHubPage() {
                         <div className="px-6 py-6 sm:px-8 sm:py-8">
                             <div className="grid gap-3 sm:grid-cols-2">
                                 {visibleLinks.map((link) => {
-                                    const Icon = iconMap[link.iconName]
                                     const opensNewTab =
                                         link.external === true ||
                                         link.href.startsWith("http://") ||
@@ -81,9 +111,7 @@ export function ContactHubPage() {
                                             className="group flex items-center justify-between rounded-3xl border border-slate-200 bg-white px-5 py-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
                                         >
                                             <div className="flex min-w-0 items-center gap-4">
-                                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition-colors duration-200 group-hover:bg-blue-50 group-hover:text-blue-700">
-                                                    <Icon className="h-5 w-5" />
-                                                </div>
+                                                <LinkIcon link={link} />
 
                                                 <div className="min-w-0">
                                                     <p className="text-base font-semibold text-slate-900">

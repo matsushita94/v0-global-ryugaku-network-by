@@ -10,9 +10,11 @@ export type ContactHubLink = {
     label: string
     description: string
     href: string
-    iconName: ContactHubIconName
     enabled: boolean
     external?: boolean
+    iconName?: ContactHubIconName
+    iconSrc?: string
+    iconAlt?: string
 }
 
 export type ContactHubContent = {
@@ -38,7 +40,7 @@ export const contactHubContent: ContactHubContent = {
         "Choose the fastest way to reach us for student guidance, enquiries, and partner discussions.",
     footerNote:
         "This page is intentionally unlisted and used for direct QR access only.",
-    logoSrc: "/logo%20-%20complete.svg",
+    logoSrc: "/images/logos/grn-logo.svg",
     logoAlt: "Global Ryugaku Network logo",
     phoneDisplay: "+81 70-9066-5906",
     phoneHref: "tel:+817090665906",
@@ -60,7 +62,8 @@ export const contactHubContent: ContactHubContent = {
             label: "WhatsApp",
             description: "Chat with us on WhatsApp",
             href: "https://wa.me/qr/OF6PKJJSM7QKA1",
-            iconName: "Phone",
+            iconSrc: "/icons/whatsapp-icon.png",
+            iconAlt: "WhatsApp icon",
             enabled: true,
             external: true,
         },
@@ -69,7 +72,8 @@ export const contactHubContent: ContactHubContent = {
             label: "LINE",
             description: "Connect with us on LINE",
             href: "https://line.me/ti/p/7SKND95wR6",
-            iconName: "Globe",
+            iconSrc: "/icons/line-icon.png",
+            iconAlt: "LINE icon",
             enabled: true,
             external: true,
         },
@@ -78,7 +82,8 @@ export const contactHubContent: ContactHubContent = {
             label: "WeChat",
             description: "Add us on WeChat",
             href: "https://u.wechat.com/kOV_uDeUO81bVmAv-hRfV6E?s=3",
-            iconName: "Globe",
+            iconSrc: "/icons/wechat-icon.png",
+            iconAlt: "WeChat icon",
             enabled: true,
             external: true,
         },
