@@ -1,9 +1,9 @@
-<svg width="240" height="140" viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
-  <text x="0" y="110"
+<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+  <text x="8" y="95"
         font-family="Inter, Arial, sans-serif"
-        font-size="120"
+        font-size="76"
         font-weight="700"
-        letter-spacing="-16">
+        letter-spacing="-12">
     <tspan fill="#3B82F6">G</tspan>
     <tspan fill="#DC2626">R</tspan>
     <tspan fill="#F59E0B">N</tspan>
