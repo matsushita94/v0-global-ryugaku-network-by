@@ -15,9 +15,6 @@ export type ContactHubLink = {
     iconName?: ContactHubIconName
     iconSrc?: string
     iconAlt?: string
-    iconWidth?: number
-    iconHeight?: number
-    iconImageClassName?: string
 }
 
 export type ContactHubContent = {
@@ -38,11 +35,11 @@ export type ContactHubContent = {
 
 export const contactHubContent: ContactHubContent = {
     eyebrow: "Quick Contact",
-    title: "",
+    title: "Connect with Global Ryugaku Network",
     subtitle:
         "Choose the fastest way to reach us for student guidance, enquiries, and partner discussions.",
     footerNote:
-        "",
+        "This page is intentionally unlisted and used for direct QR access only.",
     logoSrc: "/images/logos/grn-logo.svg",
     logoAlt: "Global Ryugaku Network logo",
     phoneDisplay: "+81 70-9066-5906",
@@ -105,9 +102,6 @@ export const contactHubContent: ContactHubContent = {
             href: "/",
             iconSrc: "/images/logos/grn-logo-initials.svg",
             iconAlt: "GRN initials logo",
-            iconWidth: 44,
-            iconHeight: 14,
-            iconImageClassName: "h-auto w-11 object-contain",
             enabled: true,
         },
         {

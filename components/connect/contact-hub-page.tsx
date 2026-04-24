@@ -32,9 +32,9 @@ function LinkIcon({ link }: { link: ContactHubLink }) {
                 <Image
                     src={link.iconSrc}
                     alt={link.iconAlt ?? link.label}
-                    width={30}
-                    height={30}
-                    className="h-7 w-7 object-contain"
+                    width={34}
+                    height={34}
+                    className="h-8 w-8 object-contain"
                 />
             </div>
         )
