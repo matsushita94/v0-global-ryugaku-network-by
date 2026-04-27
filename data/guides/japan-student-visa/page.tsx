@@ -9,7 +9,7 @@ import {
   visaGuideQuickFacts,
 } from "@/data/guides/japan-student-visa/hero"
 import { visaGuideOverview } from "@/data/guides/japan-student-visa/overview"
-import { visaGuideTimeline } from "@/data/guides/japan-student-visa/timeline"
+import { visaTimeline } from "@/data/guides/japan-student-visa/timeline"
 import { visaGuideFaq } from "@/data/guides/japan-student-visa/faq"
 
 export const metadata: Metadata = {
@@ -77,16 +77,16 @@ export default function JapanStudentVisaGuidePage() {
           </h2>
 
           <div className="mt-8 space-y-4">
-            {visaGuideTimeline.map((item, index) => (
+            {visaTimeline.map((item, index) => (
               <div
-                key={item.title}
+                key={item.stage}
                 className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
               >
                 <p className="text-sm font-semibold text-blue-700">
                   Step {index + 1}
                 </p>
                 <h3 className="mt-2 text-xl font-semibold text-slate-900">
-                  {item.title}
+                  {item.stage}
                 </h3>
                 <p className="mt-3 text-base leading-7 text-slate-600">
                   {item.description}
