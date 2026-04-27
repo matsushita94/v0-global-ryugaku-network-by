@@ -104,21 +104,5 @@ export const contactHubContent: ContactHubContent = {
             iconAlt: "GRN initials logo",
             enabled: true,
         },
-        {
-            id: "contact-form",
-            label: "Contact Form",
-            description: "Send a message from the website",
-            href: "/#contact",
-            iconName: "FileText",
-            enabled: true,
-        },
-        {
-            id: "partner",
-            label: "Partner With Us",
-            description: "School and institution enquiries",
-            href: "/#partner",
-            iconName: "Handshake",
-            enabled: true,
-        },
     ],
 }
