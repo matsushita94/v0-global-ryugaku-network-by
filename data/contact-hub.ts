@@ -35,11 +35,11 @@ export type ContactHubContent = {
 
 export const contactHubContent: ContactHubContent = {
     eyebrow: "Quick Contact",
-    title: "Connect with Global Ryugaku Network",
+    title: "",
     subtitle:
-        "Choose the fastest way to reach us for student guidance, enquiries, and partner discussions.",
+        "",
     footerNote:
-        "This page is intentionally unlisted and used for direct QR access only.",
+        "",
     logoSrc: "/images/logos/grn-logo.svg",
     logoAlt: "Global Ryugaku Network logo",
     phoneDisplay: "+81 70-9066-5906",
