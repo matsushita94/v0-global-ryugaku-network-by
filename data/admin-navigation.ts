@@ -26,3 +26,22 @@ export const adminNavigation: AdminNavigationItem[] = [
     description: "Edit website text content",
   },
 ]
+
+// ADD THIS NEW EXPORT:
+export const adminDashboardCards = [
+  {
+    href: "/admin/students",
+    title: "Students",
+    description: "View submitted leads and track application status.",
+  },
+  {
+    href: "/admin/partners",
+    title: "Partners",
+    description: "Manage referral partners, commission structure, and contact details.",
+  },
+  {
+    href: "/admin/content",
+    title: "Content",
+    description: "Edit website text content stored in Supabase.",
+  },
+]
