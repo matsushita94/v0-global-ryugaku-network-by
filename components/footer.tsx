@@ -1,13 +1,6 @@
 import Link from "next/link"
 import { Mail, Phone, MapPin } from "lucide-react"
-
-const navigation = [
-  { name: "About", href: "#about" },
-  { name: "Programs", href: "#programs" },
-  { name: "Why Japan", href: "#why-study-abroad" },
-  { name: "Partner", href: "#partner" },
-  { name: "Contact", href: "#contact" },
-]
+import { footerNavigation } from "@/data/navigation"
 
 export function Footer() {
   return (
@@ -42,7 +35,7 @@ export function Footer() {
             </h3>
 
             <ul className="mt-5 space-y-3">
-              {navigation.map((item) => (
+              {footerNavigation.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
