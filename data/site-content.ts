@@ -1,73 +1,34 @@
-export type Program = {
-  iconName: string
+export type ProgramItem = {
   title: string
-  href?: string
   description: string
-  features: string[]
 }
 
-export const programs: Program[] = [
+export const programs: ProgramItem[] = [
   {
-    iconName: "Languages",
     title: "Language Schools",
-    href: "/language-schools",
     description:
-      "Japanese language programs designed to help students build fluency, confidence, and daily communication skills.",
-    features: [
-      "Short-term and long-term courses",
-      "Multiple proficiency levels",
-      "Language and cultural immersion",
-    ],
+      "Study Japanese in Japan through beginner to advanced programs designed for international students.",
   },
   {
-    iconName: "Building2",
-    title: "Universities",
-    description:
-      "Undergraduate and postgraduate study options for students who want to pursue higher education in Japan.",
-    features: [
-      "Bachelor's and Master's pathways",
-      "Academic progression support",
-      "Long-term study opportunities",
-    ],
-  },
-  {
-    iconName: "Briefcase",
     title: "Vocational Schools",
-    href: "/vocational-schools",
     description:
-      "Practical, career-focused education for students who want hands-on training and industry-relevant skills.",
-    features: [
-      "Applied learning environment",
-      "Career-oriented programs",
-      "Specialized study options",
-    ],
+      "Build practical skills in areas such as business, IT, design, hospitality, and more.",
   },
   {
-    iconName: "Utensils",
-    title: "Hospitality Education",
+    title: "University Pathways",
     description:
-      "Programs suited to students interested in hospitality, service, tourism, and related professional pathways.",
-    features: [
-      "Hospitality-focused learning",
-      "Service industry preparation",
-      "Practical career direction",
-    ],
-  },
-  {
-    iconName: "Plane",
-    title: "Future Global Pathways",
-    description:
-      "As our network grows, we plan to expand into wider international study opportunities beyond Japan.",
-    features: [
-      "Careful step-by-step expansion",
-      "Future destination growth",
-      "Long-term global vision",
-    ],
+      "Prepare for higher education opportunities in Japan with guidance on study routes and requirements.",
   },
 ]
 
+export type AboutFeatureIconName =
+  | "Building2"
+  | "Users"
+  | "GraduationCap"
+  | "CheckCircle"
+
 export type AboutFeature = {
-  iconName: string
+  iconName: AboutFeatureIconName
   title: string
   description: string
 }
@@ -75,170 +36,130 @@ export type AboutFeature = {
 export const aboutFeatures: AboutFeature[] = [
   {
     iconName: "Building2",
-    title: "Japan-Focused Network",
+    title: "Japan-Focused Support",
     description:
-      "We are currently focused on building relationships with schools and education providers in Japan.",
+      "We are currently focused on helping students explore education opportunities in Japan with practical guidance and clear next steps.",
   },
   {
     iconName: "Users",
-    title: "Personalized Support",
+    title: "Student-Centered Approach",
     description:
-      "We provide guidance based on each student's goals, background, and study plans.",
+      "We aim to make the process easier to understand by keeping communication personal, clear, and supportive.",
   },
   {
     iconName: "GraduationCap",
-    title: "Practical Study Paths",
+    title: "Education Pathway Guidance",
     description:
-      "We focus on language schools, vocational schools, and universities in Japan.",
+      "From language schools to vocational and future academic pathways, we help students understand their available options.",
   },
   {
     iconName: "CheckCircle",
-    title: "Application Guidance",
+    title: "Growing Step by Step",
     description:
-      "We help students understand the application process and prepare for studying in Japan.",
+      "Our long-term vision is global, but we are building carefully by starting with Japan and improving the system over time.",
   },
 ]
-export type StudyAbroadBenefit = {
+
+export type StudyAbroadReason = {
   title: string
   description: string
 }
 
-export const studyAbroadBenefits: StudyAbroadBenefit[] = [
+export const whyStudyAbroadReasons: StudyAbroadReason[] = [
   {
-    title: "Access to New Opportunities",
+    title: "Broaden your perspective",
     description:
-      "Studying abroad can open doors to new academic, cultural, and personal experiences that are difficult to gain from staying in one place.",
+      "Experience new cultures, new ways of thinking, and a more global view of education and life.",
   },
   {
-    title: "Language and Communication Growth",
+    title: "Build language skills",
     description:
-      "Living and studying in a different environment helps students improve communication skills, cultural understanding, and confidence.",
+      "Improve communication skills through real-world daily use and immersive learning environments.",
   },
   {
-    title: "Personal Development",
+    title: "Grow personally",
     description:
-      "Students often become more independent, adaptable, and resilient through the experience of studying in another country.",
+      "Living and studying abroad can help build confidence, independence, and adaptability.",
   },
   {
-    title: "Broader Career Perspective",
+    title: "Create future opportunities",
     description:
-      "International study can help students build a wider perspective that supports future career planning and long-term goals.",
+      "International study can open paths to new academic, career, and personal possibilities.",
   },
 ]
 
-export type StudyAbroadHighlight = {
-  value: string
-  label: string
-}
-
-export const studyAbroadHighlights: StudyAbroadHighlight[] = [
-  {
-    value: "Japan",
-    label: "Current main focus",
-  },
-  {
-    value: "Step by step",
-    label: "Careful network growth",
-  },
-  {
-    value: "Personal",
-    label: "Guidance approach",
-  },
-]
-export type Destination = {
-  name: string
+export type DestinationItem = {
+  title: string
   description: string
   image: string
 }
 
-export const destinations: Destination[] = [
+export const destinations: DestinationItem[] = [
   {
-    name: "Tokyo",
+    title: "Tokyo",
     description:
-      "A dynamic global city with a wide range of language schools, universities, and career-focused study opportunities.",
-    image: "/images/Tokyo.jpg",
+      "A dynamic global city with a wide range of schools, lifestyles, and opportunities.",
+    image:
+      "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Osaka",
+    title: "Osaka",
     description:
-      "Known for its energy, accessibility, and friendly atmosphere, Osaka is a popular choice for students seeking both study and city life.",
-    image: "/images/Osaka.jpg",
+      "A lively city known for its energy, culture, and strong student appeal.",
+    image:
+      "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Nagoya",
+    title: "Kyoto",
     description:
-      "A major industrial and education hub offering a balance between city life and affordability, with strong opportunities in engineering, manufacturing, and practical study paths.",
-    image: "/images/Nagoya.jpg",
-  },
-  {
-    name: "Kyoto",
-    description:
-      "A city that blends traditional culture with modern education, offering a unique environment for international students.",
-    image: "/images/Kyoto.jpg",
+      "A city that blends tradition and study in a unique cultural setting.",
+    image:
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80",
   },
 ]
+
 export type ContactInfoItem = {
-  iconName: string
   label: string
   value: string
-  href?: string | null
+  href?: string
 }
 
 export const contactInfo: ContactInfoItem[] = [
   {
-    iconName: "Mail",
     label: "Email",
     value: "info@globalryugakunetwork.com",
     href: "mailto:info@globalryugakunetwork.com",
   },
   {
-    iconName: "Phone",
     label: "Phone",
     value: "+81 70-9066-5906",
     href: "tel:+817090665906",
   },
   {
-    iconName: "MapPin",
     label: "Location",
-    value: "Wakayama-shi, Japan",
-    href: null,
-  },
-  {
-    iconName: "Clock",
-    label: "Hours",
-    value: "24 hours",
-    href: null,
+    value: "Wakayama, Japan",
   },
 ]
-export type PartnerBenefit = {
-  iconName: string
+
+export type PartnerFeature = {
   title: string
   description: string
 }
 
-export const partnerBenefits: PartnerBenefit[] = [
+export const partnerFeatures: PartnerFeature[] = [
   {
-    iconName: "Users",
-    title: "Access to Global Students",
+    title: "School Partnerships",
     description:
-      "Connect with students from different countries who are actively looking for study opportunities.",
+      "We aim to build relationships with schools and education providers that value student support and clear communication.",
   },
   {
-    iconName: "Handshake",
-    title: "Simple Collaboration",
+    title: "Referral Opportunities",
     description:
-      "We focus on building straightforward and transparent partnerships with education providers.",
+      "We are building a network where trusted partners can connect students with the right education opportunities.",
   },
   {
-    iconName: "Globe",
-    title: "Growing Network",
-    description:
-      "Be part of a network that is gradually expanding beyond Japan into global education opportunities.",
-  },
-  {
-    iconName: "TrendingUp",
     title: "Long-Term Growth",
     description:
-      "Our goal is to build sustainable partnerships that grow over time, not short-term transactions.",
+      "Our goal is to grow a reliable education network step by step, starting with Japan.",
   },
 ]
